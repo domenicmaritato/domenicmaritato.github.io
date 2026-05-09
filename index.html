@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Domenic Maritato — Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500&display=swap"
+    rel="stylesheet" />
   <style>
     :root {
       --bg: #060d1a;
@@ -19,9 +22,17 @@
       --body: 'Outfit', sans-serif;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       background: var(--bg);
@@ -34,40 +45,69 @@
 
     body::before {
       content: '';
-      position: fixed; inset: 0;
+      position: fixed;
+      inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
       opacity: 0.028;
       pointer-events: none;
       z-index: 9999;
     }
 
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; opacity: 0.5; }
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
 
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 2px;
+      opacity: 0.5;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
 
     nav {
-      position: fixed; top: 0; left: 0; right: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
       z-index: 100;
       padding: 20px 32px;
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       border-bottom: 1px solid transparent;
       transition: border-color 0.3s, background 0.3s;
     }
+
     nav.scrolled {
-      background: rgba(13,13,13,0.92);
+      background: rgba(13, 13, 13, 0.92);
       backdrop-filter: blur(12px);
       border-bottom-color: var(--border);
     }
+
     .nav-logo {
-      font-family: var(--heading-font); font-weight: 800;
+      font-family: var(--heading-font);
+      font-weight: 800;
       font-size: 22px;
       letter-spacing: 2px;
       color: var(--accent);
       text-decoration: none;
     }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
     .nav-links a {
       font-family: var(--mono);
       font-size: 12px;
@@ -77,7 +117,10 @@
       text-transform: uppercase;
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--accent); }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
 
     #hero {
       min-height: 100vh;
@@ -88,18 +131,22 @@
     }
 
     .hero-grid-lines {
-      position: absolute; inset: 0;
+      position: absolute;
+      inset: 0;
       background-image:
-        linear-gradient(rgba(168,212,255,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(168,212,255,0.04) 1px, transparent 1px);
+        linear-gradient(rgba(168, 212, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(168, 212, 255, 0.04) 1px, transparent 1px);
       background-size: 60px 60px;
       pointer-events: none;
     }
 
     .hero-left {
-      display: flex; flex-direction: column; justify-content: flex-end;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
       padding: 120px 48px 80px 32px;
-      position: relative; z-index: 2;
+      position: relative;
+      z-index: 2;
       max-width: 680px;
     }
 
@@ -115,7 +162,8 @@
     }
 
     .hero-name {
-      font-family: var(--heading-font); font-weight: 800;
+      font-family: var(--heading-font);
+      font-weight: 800;
       font-size: clamp(60px, 8vw, 130px);
       line-height: 0.9;
       letter-spacing: -1px;
@@ -123,7 +171,10 @@
       opacity: 0;
       animation: fadeUp 0.7s 0.35s forwards;
     }
-    .hero-name span { color: var(--accent); }
+
+    .hero-name span {
+      color: var(--accent);
+    }
 
     .hero-sub {
       margin-top: 28px;
@@ -136,10 +187,13 @@
 
     .hero-cta {
       margin-top: 40px;
-      display: flex; gap: 16px; align-items: center;
+      display: flex;
+      gap: 16px;
+      align-items: center;
       opacity: 0;
       animation: fadeUp 0.7s 0.65s forwards;
     }
+
     .btn {
       font-family: var(--mono);
       font-size: 12px;
@@ -154,11 +208,25 @@
       cursor: pointer;
       display: inline-block;
     }
-    .btn:hover { background: transparent; color: var(--accent); }
-    .btn.ghost { background: transparent; color: var(--accent); }
-    .btn.ghost:hover { background: var(--accent); color: var(--bg); }
 
-    section { padding: 100px 0; }
+    .btn:hover {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .btn.ghost {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .btn.ghost:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    section {
+      padding: 100px 0;
+    }
 
     .section-label {
       font-family: var(--mono);
@@ -168,8 +236,10 @@
       color: var(--accent);
       margin-bottom: 12px;
     }
+
     .section-title {
-      font-family: var(--heading-font); font-weight: 800;
+      font-family: var(--heading-font);
+      font-weight: 800;
       font-size: clamp(42px, 7vw, 80px);
       line-height: 0.95;
       letter-spacing: 1px;
@@ -177,7 +247,9 @@
       margin-bottom: 60px;
     }
 
-    #experience { border-top: 1px solid var(--border); }
+    #experience {
+      border-top: 1px solid var(--border);
+    }
 
     .exp-item {
       display: grid;
@@ -189,9 +261,16 @@
       transform: translateY(20px);
       transition: opacity 0.5s, transform 0.5s;
     }
-    .exp-item.visible { opacity: 1; transform: none; }
 
-    .exp-meta { padding-top: 4px; }
+    .exp-item.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .exp-meta {
+      padding-top: 4px;
+    }
+
     .exp-date {
       font-family: var(--mono);
       font-size: 11px;
@@ -199,6 +278,7 @@
       letter-spacing: 1px;
       margin-bottom: 8px;
     }
+
     .exp-company {
       font-size: 13px;
       color: var(--muted);
@@ -206,13 +286,18 @@
     }
 
     .exp-title {
-      font-family: var(--heading-font); font-weight: 800;
+      font-family: var(--heading-font);
+      font-weight: 800;
       font-size: 28px;
       letter-spacing: 1px;
       color: var(--text);
       margin-bottom: 16px;
     }
-    .exp-bullets { list-style: none; }
+
+    .exp-bullets {
+      list-style: none;
+    }
+
     .exp-bullets li {
       font-size: 14px;
       color: #aaa;
@@ -221,20 +306,25 @@
       position: relative;
       margin-bottom: 6px;
     }
+
     .exp-bullets li::before {
       content: '→';
-      position: absolute; left: 0;
+      position: absolute;
+      left: 0;
       color: var(--accent);
       font-size: 12px;
     }
 
-    #projects { border-top: 1px solid var(--border); }
+    #projects {
+      border-top: 1px solid var(--border);
+    }
 
     .demo-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 2px;
     }
+
     .demo-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -243,28 +333,50 @@
       transform: translateY(20px);
       transition: opacity 0.5s, transform 0.5s;
     }
-    .demo-card.visible { opacity: 1; transform: none; }
-    .demo-card-wide { grid-column: 1 / -1; }
+
+    .demo-card.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .demo-card-wide {
+      grid-column: 1 / -1;
+    }
+
     .demo-card-header {
       padding: 24px 28px 20px;
-      display: flex; justify-content: space-between; align-items: flex-start;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
       gap: 16px;
       border-bottom: 1px solid var(--border);
     }
+
     .demo-tag {
-      font-family: var(--mono); font-size: 10px;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: var(--accent2); margin-bottom: 6px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 6px;
     }
+
     .demo-title {
-      font-family: var(--heading-font); font-weight: 800;
-      font-size: 22px; letter-spacing: 1px;
+      font-family: var(--heading-font);
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: 1px;
       color: var(--text);
     }
+
     .demo-desc {
-      font-size: 12px; color: var(--muted);
-      line-height: 1.6; max-width: 320px; text-align: right;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 320px;
+      text-align: right;
     }
+
     .demo-header-right {
       display: flex;
       flex-direction: column;
@@ -272,6 +384,7 @@
       gap: 10px;
       flex-shrink: 0;
     }
+
     .src-btn {
       font-family: var(--mono);
       font-size: 10px;
@@ -285,20 +398,29 @@
       transition: border-color 0.15s, color 0.15s, background 0.15s;
       white-space: nowrap;
     }
-    .src-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(168,212,255,0.05); }
+
+    .src-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(168, 212, 255, 0.05);
+    }
 
     #src-modal {
       display: none;
       position: fixed;
       inset: 0;
       z-index: 1000;
-      background: rgba(4,8,16,0.9);
+      background: rgba(4, 8, 16, 0.9);
       backdrop-filter: blur(8px);
       align-items: center;
       justify-content: center;
       padding: 24px;
     }
-    #src-modal.open { display: flex; }
+
+    #src-modal.open {
+      display: flex;
+    }
+
     #src-modal-box {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -309,6 +431,7 @@
       flex-direction: column;
       overflow: hidden;
     }
+
     #src-modal-header {
       display: flex;
       align-items: center;
@@ -318,6 +441,7 @@
       flex-shrink: 0;
       gap: 16px;
     }
+
     #src-modal-title {
       font-family: var(--heading-font);
       font-weight: 800;
@@ -325,6 +449,7 @@
       letter-spacing: 1px;
       color: var(--accent);
     }
+
     #src-modal-close {
       font-family: var(--mono);
       font-size: 11px;
@@ -338,14 +463,30 @@
       transition: border-color 0.15s, color 0.15s;
       flex-shrink: 0;
     }
-    #src-modal-close:hover { border-color: var(--accent); color: var(--accent); }
+
+    #src-modal-close:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
     #src-modal-body {
       overflow-y: auto;
       flex: 1;
     }
-    #src-modal-body::-webkit-scrollbar { width: 4px; }
-    #src-modal-body::-webkit-scrollbar-track { background: var(--surface); }
-    #src-modal-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    #src-modal-body::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    #src-modal-body::-webkit-scrollbar-track {
+      background: var(--surface);
+    }
+
+    #src-modal-body::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 2px;
+    }
+
     #src-modal-body pre {
       margin: 0;
       padding: 22px 24px;
@@ -357,87 +498,162 @@
       tab-size: 4;
       overflow-x: auto;
     }
-    #src-modal-body pre .kw  { color: #c8f135; }
-    #src-modal-body pre .cm  { color: #3d5a72; font-style: italic; }
-    #src-modal-body pre .str { color: #3bf7c8; }
-    #src-modal-body pre .num { color: #f7a53b; }
-    #src-modal-body pre .ann { color: #c8a0ff; }
+
+    #src-modal-body pre .kw {
+      color: #c8f135;
+    }
+
+    #src-modal-body pre .cm {
+      color: #3d5a72;
+      font-style: italic;
+    }
+
+    #src-modal-body pre .str {
+      color: #3bf7c8;
+    }
+
+    #src-modal-body pre .num {
+      color: #f7a53b;
+    }
+
+    #src-modal-body pre .ann {
+      color: #c8a0ff;
+    }
 
     .demo-frame {
       position: relative;
-      width: 100%; height: 340px;
+      width: 100%;
+      height: 340px;
       background: var(--bg);
-      overflow: hidden; cursor: crosshair;
+      overflow: hidden;
+      cursor: crosshair;
     }
-    .demo-frame-tall { height: 420px; }
+
+    .demo-frame-tall {
+      height: 420px;
+    }
+
     .demo-frame canvas {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%; display: block;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
     }
+
     .demo-overlay {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      background: rgba(6,13,26,0.82);
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(6, 13, 26, 0.82);
       backdrop-filter: blur(4px);
-      cursor: pointer; z-index: 10;
+      cursor: pointer;
+      z-index: 10;
       transition: opacity 0.5s;
     }
-    .demo-overlay.hidden { opacity: 0; pointer-events: none; }
+
+    .demo-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
     .demo-play-btn {
-      width: 56px; height: 56px;
+      width: 56px;
+      height: 56px;
       border: 1.5px solid var(--accent);
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin-bottom: 12px;
       transition: transform 0.2s, box-shadow 0.2s;
     }
+
     .demo-overlay:hover .demo-play-btn {
       transform: scale(1.12);
-      box-shadow: 0 0 30px rgba(168,212,255,0.25);
+      box-shadow: 0 0 30px rgba(168, 212, 255, 0.25);
     }
+
     .demo-play-btn::after {
       content: '';
-      width: 0; height: 0;
+      width: 0;
+      height: 0;
       border-style: solid;
       border-width: 9px 0 9px 16px;
       border-color: transparent transparent transparent var(--accent);
       margin-left: 3px;
     }
+
     .demo-play-label {
-      font-family: var(--mono); font-size: 10px;
-      letter-spacing: 2px; text-transform: uppercase;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
       color: var(--muted);
     }
+
     .demo-controls {
-      position: absolute; top: 12px; right: 12px;
-      display: flex; flex-direction: column; gap: 6px;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
       z-index: 5;
     }
+
     .dc-btn {
-      font-family: var(--mono); font-size: 10px;
-      letter-spacing: 1px; text-transform: uppercase;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
       padding: 6px 10px;
       border: 1px solid var(--border);
-      background: rgba(6,13,26,0.85);
-      color: var(--muted); cursor: pointer;
+      background: rgba(6, 13, 26, 0.85);
+      color: var(--muted);
+      cursor: pointer;
       transition: border-color 0.15s, color 0.15s;
     }
-    .dc-btn:hover { border-color: var(--accent); color: var(--accent); }
-    .dc-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(168,212,255,0.06); }
-    .demo-hud {
-      position: absolute; top: 12px; left: 12px;
-      font-family: var(--mono); font-size: 11px;
-      color: var(--accent); letter-spacing: 1px;
-      display: flex; gap: 20px; z-index: 5;
-    }
-    .pg-hint {
-      font-family: var(--mono); font-size: 10px;
-      letter-spacing: 1px; color: var(--muted);
-      margin-top: 4px; text-align: right;
+
+    .dc-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
     }
 
-    #skills { border-top: 1px solid var(--border); }
+    .dc-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(168, 212, 255, 0.06);
+    }
+
+    .demo-hud {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 1px;
+      display: flex;
+      gap: 20px;
+      z-index: 5;
+    }
+
+    .pg-hint {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: var(--muted);
+      margin-top: 4px;
+      text-align: right;
+    }
+
+    #skills {
+      border-top: 1px solid var(--border);
+    }
 
     .skills-layout {
       display: grid;
@@ -456,7 +672,12 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .skill-list { display: flex; flex-wrap: wrap; gap: 10px; }
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
     .skill-chip {
       font-family: var(--mono);
       font-size: 12px;
@@ -467,34 +688,46 @@
       transition: border-color 0.2s, color 0.2s, background 0.2s;
       cursor: default;
     }
+
     .skill-chip:hover {
       border-color: var(--accent);
       color: var(--accent);
-      background: rgba(200,241,53,0.05);
+      background: rgba(200, 241, 53, 0.05);
     }
 
-    #education { border-top: 1px solid var(--border); }
+    #education {
+      border-top: 1px solid var(--border);
+    }
 
     .edu-block {
-      display: flex; align-items: flex-start;
+      display: flex;
+      align-items: flex-start;
       gap: 48px;
     }
+
     .edu-year {
-      font-family: var(--heading-font); font-weight: 800;
+      font-family: var(--heading-font);
+      font-weight: 800;
       font-size: 80px;
       line-height: 1;
       color: var(--border);
       white-space: nowrap;
       flex-shrink: 0;
     }
-    .edu-details { padding-top: 8px; }
+
+    .edu-details {
+      padding-top: 8px;
+    }
+
     .edu-school {
-      font-family: var(--heading-font); font-weight: 800;
+      font-family: var(--heading-font);
+      font-weight: 800;
       font-size: 36px;
       letter-spacing: 1px;
       color: var(--text);
       margin-bottom: 8px;
     }
+
     .edu-degree {
       font-family: var(--mono);
       font-size: 13px;
@@ -506,60 +739,155 @@
       border-top: 1px solid var(--border);
       padding: 100px 0 60px;
     }
+
     .contact-big {
-      font-family: var(--heading-font); font-weight: 800;
+      font-family: var(--heading-font);
+      font-weight: 800;
       font-size: clamp(50px, 10vw, 130px);
       line-height: 0.9;
       color: var(--text);
       margin-bottom: 48px;
     }
-    .contact-big span { color: var(--accent); }
+
+    .contact-big span {
+      color: var(--accent);
+    }
 
     .contact-row {
-      display: flex; align-items: center; gap: 12px;
-      font-family: var(--mono); font-size: 13px;
-      color: var(--muted); margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
     }
+
     .contact-row::before {
       content: '';
-      display: inline-block; width: 24px; height: 1px;
+      display: inline-block;
+      width: 24px;
+      height: 1px;
       background: var(--accent);
     }
 
     footer {
       padding: 32px 32px;
       border-top: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
-      font-family: var(--mono); font-size: 11px;
-      color: var(--muted); letter-spacing: 1px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 1px;
     }
-    footer span { color: var(--accent); }
+
+    footer span {
+      color: var(--accent);
+    }
 
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @media (max-width: 720px) {
-      .container { padding: 0 20px; }
-      nav { padding: 16px 20px; }
-      nav .nav-links { display: none; }
-      section { padding: 64px 0; }
-      #hero { min-height: 100svh; align-items: flex-end; }
-      .hero-left { padding: 80px 20px 60px; max-width: 100%; }
-      .hero-sub { font-size: 13px; }
-      .hero-cta { flex-direction: column; align-items: flex-start; gap: 12px; }
-      .btn { width: 100%; text-align: center; padding: 14px 20px; }
-      .section-title { margin-bottom: 36px; }
-      .exp-item { grid-template-columns: 1fr; gap: 12px; padding: 28px 0; }
-      .exp-title { font-size: 22px; }
-      .demo-grid { grid-template-columns: 1fr; }
-      .demo-card-header { flex-direction: column; gap: 10px; }
-      .demo-header-right { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
-      .demo-desc { text-align: left; max-width: 100%; }
-      .demo-frame { height: 280px; }
-      .demo-frame-tall { height: 320px; }
-      #boggle-wrap { height: auto !important; }
+      .container {
+        padding: 0 20px;
+      }
+
+      nav {
+        padding: 16px 20px;
+      }
+
+      nav .nav-links {
+        display: none;
+      }
+
+      section {
+        padding: 64px 0;
+      }
+
+      #hero {
+        min-height: 100svh;
+        align-items: flex-end;
+      }
+
+      .hero-left {
+        padding: 80px 20px 60px;
+        max-width: 100%;
+      }
+
+      .hero-sub {
+        font-size: 13px;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center;
+        padding: 14px 20px;
+      }
+
+      .section-title {
+        margin-bottom: 36px;
+      }
+
+      .exp-item {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 28px 0;
+      }
+
+      .exp-title {
+        font-size: 22px;
+      }
+
+      .demo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .demo-card-header {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .demo-header-right {
+        align-items: flex-start;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      .demo-desc {
+        text-align: left;
+        max-width: 100%;
+      }
+
+      .demo-frame {
+        height: 280px;
+      }
+
+      .demo-frame-tall {
+        height: 320px;
+      }
+
+      #boggle-wrap {
+        height: auto !important;
+      }
+
       #boggle-ui {
         flex-direction: column !important;
         align-items: stretch !important;
@@ -567,26 +895,76 @@
         padding: 16px !important;
         height: auto !important;
       }
-      #boggle-board-wrap { align-self: center; }
-      .skills-layout { grid-template-columns: 1fr; gap: 36px; }
-      .edu-block { flex-direction: column; gap: 12px; }
-      .edu-year { font-size: 48px; }
-      .edu-school { font-size: 26px; }
-      .contact-big { font-size: clamp(40px, 14vw, 80px); margin-bottom: 32px; }
-      footer { padding: 24px 20px; flex-direction: column; gap: 8px; text-align: center; }
-      #src-modal { padding: 12px; }
-      #src-modal-body pre { font-size: 11px; padding: 16px; }
+
+      #boggle-board-wrap {
+        align-self: center;
+      }
+
+      .skills-layout {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+
+      .edu-block {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .edu-year {
+        font-size: 48px;
+      }
+
+      .edu-school {
+        font-size: 26px;
+      }
+
+      .contact-big {
+        font-size: clamp(40px, 14vw, 80px);
+        margin-bottom: 32px;
+      }
+
+      footer {
+        padding: 24px 20px;
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+      }
+
+      #src-modal {
+        padding: 12px;
+      }
+
+      #src-modal-body pre {
+        font-size: 11px;
+        padding: 16px;
+      }
     }
 
     @media (max-width: 420px) {
-      .hero-left { padding: 72px 16px 48px; }
-      .container { padding: 0 16px; }
-      .demo-frame { height: 240px; }
-      .demo-frame-tall { height: 280px; }
-      .dc-btn { font-size: 9px; padding: 5px 8px; }
+      .hero-left {
+        padding: 72px 16px 48px;
+      }
+
+      .container {
+        padding: 0 16px;
+      }
+
+      .demo-frame {
+        height: 240px;
+      }
+
+      .demo-frame-tall {
+        height: 280px;
+      }
+
+      .dc-btn {
+        font-size: 9px;
+        padding: 5px 8px;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <div id="src-modal" role="dialog" aria-modal="true" aria-labelledby="src-modal-title">
@@ -595,7 +973,9 @@
         <span id="src-modal-title"></span>
         <button id="src-modal-close" onclick="closeSource()">Close &#x2715;</button>
       </div>
-      <div id="src-modal-body"><pre id="src-modal-pre"></pre></div>
+      <div id="src-modal-body">
+        <pre id="src-modal-pre"></pre>
+      </div>
     </div>
   </div>
 
@@ -613,7 +993,7 @@
     <div class="hero-grid-lines"></div>
     <div class="hero-left">
       <div class="hero-tag">Computer Science Student · Pittsburgh, PA</div>
-      <h1 class="hero-name">DOMENIC<br/><span>MARITATO</span></h1>
+      <h1 class="hero-name">DOMENIC<br /><span>MARITATO</span></h1>
       <p class="hero-sub">
         Motivated CS student with hands-on experience in debugging, developing complex projects,
         and implementing algorithms. Seeking a technical internship to contribute to impactful software.
@@ -638,9 +1018,12 @@
         <div class="exp-content">
           <div class="exp-title">IT CONSULTANT</div>
           <ul class="exp-bullets">
-            <li>Diagnosed, reinstalled, and repackaged malfunctioning kiosks to restore functionality and improve deployment efficiency</li>
-            <li>Unboxed, organized, and prepared a variety of electronic equipment for installation and site deployment</li>
-            <li>Installed and configured electronic systems across multiple UPMC locations, ensuring proper setup and operational readiness</li>
+            <li>Diagnosed, reinstalled, and repackaged malfunctioning kiosks to restore functionality and improve
+              deployment efficiency</li>
+            <li>Unboxed, organized, and prepared a variety of electronic equipment for installation and site deployment
+            </li>
+            <li>Installed and configured electronic systems across multiple UPMC locations, ensuring proper setup and
+              operational readiness</li>
           </ul>
         </div>
       </div>
@@ -653,9 +1036,9 @@
         <div class="exp-content">
           <div class="exp-title">DOG HANDLER</div>
           <ul class="exp-bullets">
-            <li>Developed deep understanding of animal behavior and adapted techniques based on individual traits over time</li>
+            <li>Developed deep understanding of animal behavior and adapted techniques based on individual traits over
+              time</li>
             <li>Maintained calm, organized composure in a high-energy, unpredictable environment</li>
-			<li>Built a foundational relationship with long lasting customers</li> 
           </ul>
         </div>
       </div>
@@ -676,7 +1059,8 @@
               <div class="demo-title">PHYSICS SANDBOX</div>
             </div>
             <div class="demo-header-right">
-              <div class="demo-desc">Custom particle physics engine — gravity, collisions, explosion forces, glow trails.</div>
+              <div class="demo-desc">Custom particle physics engine — gravity, collisions, explosion forces, glow
+                trails.</div>
               <button class="src-btn" onclick="showSource('sandbox')">&#60;/&#62; Source</button>
             </div>
           </div>
@@ -702,7 +1086,8 @@
               <div class="demo-title">BREAKOUT GAME</div>
             </div>
             <div class="demo-header-right">
-              <div class="demo-desc">Ported from MIPS assembly — paddle, ball physics, block destruction, all collision logic rebuilt in JS.</div>
+              <div class="demo-desc">Ported from MIPS assembly — paddle, ball physics, block destruction, all collision
+                logic rebuilt in JS.</div>
               <button class="src-btn" onclick="showSource('breakout')">&#60;/&#62; Source</button>
             </div>
           </div>
@@ -726,7 +1111,9 @@
               <div class="demo-title">NETWORK SECURITY VISUALIZER</div>
             </div>
             <div class="demo-header-right">
-              <div class="demo-desc">BFS infection spread + Dijkstra patch routing on a live network graph. Red = vulnerable, blue = secure. Click nodes to toggle. Visualizes the exact algorithms from the Java source.</div>
+              <div class="demo-desc">BFS infection spread + Dijkstra patch routing on a live network graph. Red =
+                vulnerable, blue = secure. Click nodes to toggle. Visualizes the exact algorithms from the Java source.
+              </div>
               <button class="src-btn" onclick="showSource('pittguard')">&#60;/&#62; Source</button>
             </div>
           </div>
@@ -748,27 +1135,35 @@
               <div class="demo-title">BOGGLE GAME ENGINE</div>
             </div>
             <div class="demo-header-right">
-              <div class="demo-desc">DFS + backtracking word search on a random board. Pruned via prefix trie. Finds all valid words, checks adjacency, marks paths — mirrors the Java source exactly.</div>
+              <div class="demo-desc">DFS + backtracking word search on a random board. Pruned via prefix trie. Finds all
+                valid words, checks adjacency, marks paths — mirrors the Java source exactly.</div>
               <button class="src-btn" onclick="showSource('boggle')">&#60;/&#62; Source</button>
             </div>
           </div>
           <div class="demo-frame demo-frame-tall" id="boggle-wrap" style="cursor:default; height: 480px;">
-            <div id="boggle-ui" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; gap: 48px; padding: 24px; flex-wrap: wrap;">
+            <div id="boggle-ui"
+              style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; gap: 48px; padding: 24px; flex-wrap: wrap;">
               <div id="boggle-board-wrap" style="display:flex; flex-direction:column; gap:6px; flex-shrink:0;"></div>
               <div style="flex:1; min-width:240px; max-width:380px; display:flex; flex-direction:column; gap:14px;">
                 <div style="display:flex; gap:8px; align-items:center;">
-                  <input id="boggle-input" type="text" placeholder="Type a word..." autocomplete="off" spellcheck="false"
-                    style="font-family:var(--mono); font-size:13px; letter-spacing:1px; text-transform:uppercase; background:var(--bg); border:1px solid var(--border); color:var(--text); padding:10px 14px; flex:1; outline:none; transition: border-color 0.2s;"/>
+                  <input id="boggle-input" type="text" placeholder="Type a word..." autocomplete="off"
+                    spellcheck="false"
+                    style="font-family:var(--mono); font-size:13px; letter-spacing:1px; text-transform:uppercase; background:var(--bg); border:1px solid var(--border); color:var(--text); padding:10px 14px; flex:1; outline:none; transition: border-color 0.2s;" />
                   <button id="boggle-submit" class="dc-btn" style="padding: 10px 14px;">CHECK</button>
                 </div>
-                <div id="boggle-feedback" style="font-family:var(--mono); font-size:12px; letter-spacing:1px; color:var(--muted); min-height:18px;"></div>
+                <div id="boggle-feedback"
+                  style="font-family:var(--mono); font-size:12px; letter-spacing:1px; color:var(--muted); min-height:18px;">
+                </div>
                 <div style="display:flex; gap:8px; flex-wrap:wrap;">
                   <button id="boggle-solve" class="dc-btn">Find All Words</button>
                   <button id="boggle-newboard" class="dc-btn">New Board</button>
                 </div>
                 <div style="border-top:1px solid var(--border); padding-top:12px;">
-                  <div style="font-family:var(--mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:8px;" id="boggle-word-count"></div>
-                  <div id="boggle-word-list" style="display:flex; flex-wrap:wrap; gap:6px; max-height:160px; overflow-y:auto;"></div>
+                  <div
+                    style="font-family:var(--mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:8px;"
+                    id="boggle-word-count"></div>
+                  <div id="boggle-word-list"
+                    style="display:flex; flex-wrap:wrap; gap:6px; max-height:160px; overflow-y:auto;"></div>
                 </div>
               </div>
             </div>
@@ -828,13 +1223,15 @@
   <section id="contact">
     <div class="container">
       <div class="section-label">05 — Contact</div>
-      <div class="contact-big">LET'S<br/><span>WORK.</span></div>
+      <div class="contact-big">LET'S<br /><span>WORK.</span></div>
       <div class="contact-row">Pittsburgh, PA</div>
       <div class="contact-row">domenic.maritato@gmail.com</div>
       <div class="contact-row">412-865-8696</div>
-      <div class="contact-row"><a href="https://www.linkedin.com/in/domenic-maritato-29a5a2332/" target="_blank" style="color:var(--muted); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">linkedin.com/in/domenic-maritato-29a5a2332</a></div>
-	  <div class="contact-row"><a href="https://github.com/domenicmaritato" target="_blank" style="color:var(--muted); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">https://github.com/domenicmaritato</a></div>
-      <br/><br/>
+      <div class="contact-row"><a href="https://www.linkedin.com/in/domenic-maritato-29a5a2332/" target="_blank"
+          style="color:var(--muted); text-decoration:none; transition:color 0.2s;"
+          onmouseover="this.style.color='var(--accent)'"
+          onmouseout="this.style.color='var(--muted)'">linkedin.com/in/domenic-maritato-29a5a2332</a></div>
+      <br /><br />
       <a href="mailto:domenic.maritato@gmail.com" class="btn" style="margin-top:8px;">Send a Message</a>
     </div>
   </section>
@@ -870,7 +1267,7 @@
         gain.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.05);
         osc.start(ac.currentTime);
         osc.stop(ac.currentTime + 0.05);
-      } catch(e) {}
+      } catch (e) { }
     }
 
     function soundClick() {
@@ -888,7 +1285,7 @@
           osc.start(ac.currentTime);
           osc.stop(ac.currentTime + 0.09);
         });
-      } catch(e) {}
+      } catch (e) { }
     }
 
     function soundPop(pitch = 600) {
@@ -904,7 +1301,7 @@
         gain.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.08);
         osc.start(ac.currentTime);
         osc.stop(ac.currentTime + 0.08);
-      } catch(e) {}
+      } catch (e) { }
     }
 
     function soundBounce() {
@@ -920,7 +1317,7 @@
         gain.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.1);
         osc.start(ac.currentTime);
         osc.stop(ac.currentTime + 0.1);
-      } catch(e) {}
+      } catch (e) { }
     }
 
     function soundExplode() {
@@ -950,7 +1347,7 @@
         gainS.gain.setValueAtTime(0.4, ac.currentTime);
         gainS.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.25);
         sub.start(ac.currentTime); sub.stop(ac.currentTime + 0.25);
-      } catch(e) {}
+      } catch (e) { }
     }
 
     let lastHover = 0;
@@ -988,10 +1385,10 @@
     // =====================================================
 
     const SOURCE_TITLES = {
-      sandbox:   'Physics Sandbox — JavaScript',
-      breakout:  'Breakout Game — MIPS Assembly',
+      sandbox: 'Physics Sandbox — JavaScript',
+      breakout: 'Breakout Game — MIPS Assembly',
       pittguard: 'PittGuard — Java',
-      boggle:    'Boggle Game Engine — Java'
+      boggle: 'Boggle Game Engine — Java'
     };
 
     const SOURCE_CODE = {};
@@ -1578,10 +1975,10 @@ public class BoggleGame implements BoggleGameInterface {
 }`;
 
     const LANG_MAP = {
-      sandbox:   'js',
-      breakout:  'asm',
+      sandbox: 'js',
+      breakout: 'asm',
       pittguard: 'java',
-      boggle:    'java'
+      boggle: 'java'
     };
 
     function escHtml(s) {
@@ -1597,28 +1994,28 @@ public class BoggleGame implements BoggleGameInterface {
       // everything else is emitted as escaped plain text.
 
       function esc(t) {
-        return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
       }
 
-      const javaKws = new Set(['abstract','assert','boolean','break','byte','case',
-        'catch','char','class','const','continue','default','do','double','else',
-        'enum','extends','final','finally','float','for','goto','if','implements',
-        'import','instanceof','int','interface','long','native','new','package',
-        'private','protected','public','return','short','static','strictfp','super',
-        'switch','synchronized','this','throw','throws','transient','try','void',
-        'volatile','while','null','true','false',
-        'HashMap','HashSet','ArrayList','LinkedList','Queue','PriorityQueue',
-        'String','StringBuilder','Scanner','File','Random']);
+      const javaKws = new Set(['abstract', 'assert', 'boolean', 'break', 'byte', 'case',
+        'catch', 'char', 'class', 'const', 'continue', 'default', 'do', 'double', 'else',
+        'enum', 'extends', 'final', 'finally', 'float', 'for', 'goto', 'if', 'implements',
+        'import', 'instanceof', 'int', 'interface', 'long', 'native', 'new', 'package',
+        'private', 'protected', 'public', 'return', 'short', 'static', 'strictfp', 'super',
+        'switch', 'synchronized', 'this', 'throw', 'throws', 'transient', 'try', 'void',
+        'volatile', 'while', 'null', 'true', 'false',
+        'HashMap', 'HashSet', 'ArrayList', 'LinkedList', 'Queue', 'PriorityQueue',
+        'String', 'StringBuilder', 'Scanner', 'File', 'Random']);
 
-      const asmKws = new Set(['push','pop','jr','jal','lw','sw','lb','sb','li','la',
-        'lstr','add','sub','mul','div','beq','bne','blt','bgt','ble','bge','beqz',
-        'bnez','j','move','neg','abs','srl','sra','sll','and','or','xor','not',
-        'syscall','nop']);
+      const asmKws = new Set(['push', 'pop', 'jr', 'jal', 'lw', 'sw', 'lb', 'sb', 'li', 'la',
+        'lstr', 'add', 'sub', 'mul', 'div', 'beq', 'bne', 'blt', 'bgt', 'ble', 'bge', 'beqz',
+        'bnez', 'j', 'move', 'neg', 'abs', 'srl', 'sra', 'sll', 'and', 'or', 'xor', 'not',
+        'syscall', 'nop']);
 
-      const jsKws = new Set(['function','return','const','let','var','for','while',
-        'if','else','new','this','null','true','false','void','typeof','instanceof',
-        'class','extends','import','export','default','break','continue','switch',
-        'case','throw','try','catch','finally','async','await','of','in']);
+      const jsKws = new Set(['function', 'return', 'const', 'let', 'var', 'for', 'while',
+        'if', 'else', 'new', 'this', 'null', 'true', 'false', 'void', 'typeof', 'instanceof',
+        'class', 'extends', 'import', 'export', 'default', 'break', 'continue', 'switch',
+        'case', 'throw', 'try', 'catch', 'finally', 'async', 'await', 'of', 'in']);
 
       const kws = lang === 'asm' ? asmKws : lang === 'java' ? javaKws : jsKws;
 
@@ -1628,7 +2025,7 @@ public class BoggleGame implements BoggleGameInterface {
 
       while (i < n) {
         // Single-line comment
-        if ((lang === 'java' || lang === 'js') && code[i] === '/' && code[i+1] === '/') {
+        if ((lang === 'java' || lang === 'js') && code[i] === '/' && code[i + 1] === '/') {
           let end = code.indexOf('\n', i);
           if (end === -1) end = n;
           out += '<span class="cm">' + esc(code.slice(i, end)) + '</span>';
@@ -1636,7 +2033,7 @@ public class BoggleGame implements BoggleGameInterface {
           continue;
         }
         // Block comment
-        if ((lang === 'java' || lang === 'js') && code[i] === '/' && code[i+1] === '*') {
+        if ((lang === 'java' || lang === 'js') && code[i] === '/' && code[i + 1] === '*') {
           let end = code.indexOf('*/', i + 2);
           if (end === -1) end = n - 2; else end += 2;
           out += '<span class="cm">' + esc(code.slice(i, end)) + '</span>';
@@ -1662,7 +2059,7 @@ public class BoggleGame implements BoggleGameInterface {
         // String literal
         if (code[i] === '"') {
           let j = i + 1;
-          while (j < n && !(code[j] === '"' && code[j-1] !== '\\')) j++;
+          while (j < n && !(code[j] === '"' && code[j - 1] !== '\\')) j++;
           j++;
           out += '<span class="str">' + esc(code.slice(i, j)) + '</span>';
           i = j;
@@ -1721,7 +2118,7 @@ public class BoggleGame implements BoggleGameInterface {
       document.body.style.overflow = '';
     }
 
-    document.getElementById('src-modal').addEventListener('click', function(e) {
+    document.getElementById('src-modal').addEventListener('click', function (e) {
       if (e.target === this) closeSource();
     });
     document.addEventListener('keydown', e => {
@@ -1742,7 +2139,7 @@ public class BoggleGame implements BoggleGameInterface {
       let mode = 'balls';
       let gravityDir = 1;
 
-      const COLORS = ['#c8f135','#3bf7c8','#f7a53b','#f73b7a','#a53bf7','#ffffff'];
+      const COLORS = ['#c8f135', '#3bf7c8', '#f7a53b', '#f73b7a', '#a53bf7', '#ffffff'];
 
       function resize() {
         const rect = canvas.parentElement.getBoundingClientRect();
@@ -1817,7 +2214,7 @@ public class BoggleGame implements BoggleGameInterface {
         soundExplode();
         balls.forEach(b => {
           const dx = b.x - cx, dy = b.y - cy;
-          const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+          const dist = Math.sqrt(dx * dx + dy * dy) || 1;
           if (dist < 200) {
             const force = (200 - dist) / 200 * 20;
             b.vx += (dx / dist) * force;
@@ -1858,8 +2255,8 @@ public class BoggleGame implements BoggleGameInterface {
           b.x += b.vx;
           b.y += b.vy;
 
-          if (b.x - b.r < 0) { b.x = b.r; b.vx *= -0.7; if(Math.abs(b.vx)>1) tryBounceSound(); }
-          if (b.x + b.r > W) { b.x = W - b.r; b.vx *= -0.7; if(Math.abs(b.vx)>1) tryBounceSound(); }
+          if (b.x - b.r < 0) { b.x = b.r; b.vx *= -0.7; if (Math.abs(b.vx) > 1) tryBounceSound(); }
+          if (b.x + b.r > W) { b.x = W - b.r; b.vx *= -0.7; if (Math.abs(b.vx) > 1) tryBounceSound(); }
           if (gravityDir > 0 && b.y + b.r > H) {
             b.y = H - b.r; b.vy *= -0.6;
             if (Math.abs(b.vy) > 1) tryBounceSound();
@@ -1939,7 +2336,7 @@ public class BoggleGame implements BoggleGameInterface {
         const cols = 8, rows = 4;
         const bw = (W - 40) / cols, bh = 22;
         bricks = [];
-        const colors = ['#f73b7a','#f7a53b','#c8f135','#3bf7c8'];
+        const colors = ['#f73b7a', '#f7a53b', '#c8f135', '#3bf7c8'];
         for (let r = 0; r < rows; r++) {
           for (let c = 0; c < cols; c++) {
             bricks.push({ x: 20 + c * bw, y: 50 + r * (bh + 6), w: bw - 4, h: bh, alive: true, color: colors[r] });
@@ -2000,7 +2397,7 @@ public class BoggleGame implements BoggleGameInterface {
         for (const b of bricks) {
           if (!b.alive) continue;
           if (ball.x + ball.r > b.x && ball.x - ball.r < b.x + b.w &&
-              ball.y + ball.r > b.y && ball.y - ball.r < b.y + b.h) {
+            ball.y + ball.r > b.y && ball.y - ball.r < b.y + b.h) {
             b.alive = false;
             ball.vy *= -1;
             score += 10;
@@ -2079,7 +2476,7 @@ public class BoggleGame implements BoggleGameInterface {
           for (let j = i + 1; j < nodes.length; j++) {
             const dx = nodes[i].x - nodes[j].x;
             const dy = nodes[i].y - nodes[j].y;
-            if (Math.sqrt(dx*dx + dy*dy) < connectDist) edges.push([i, j]);
+            if (Math.sqrt(dx * dx + dy * dy) < connectDist) edges.push([i, j]);
           }
         }
       }
@@ -2223,8 +2620,8 @@ public class BoggleGame implements BoggleGameInterface {
       let highlightTimer = null;
 
       const WORD_LIST = [
-        'the','and','for','are','but','not','you','all','can','her','was','one','our','out','day','get','has','him','his','how','man','new','now','old','see','two','way','who','did','its','let','put','say','she','too','use','that','with','have','this','will','your','from','they','know','want','been','good','much','some','time','very','when','come','here','just','like','long','make','many','over','such','take','than','them','well','were','what','word','also','back','call','came','each','even','find','give','hand','help','high','hold','home','keep','kind','last','left','life','live','look','made','most','move','much','must','name','need','next','once','only','open','part','play','real','same','show','side','soon','tell','than','then','there','think','those','through','together','under','until','upon','used','very','what','when','while','world','would','year','about','after','again','along','among','asked','began','being','below','bring','built','carry','cause','close','comes','could','cover','cross','doing','drive','early','earth','eight','every','face','fall','five','four','free','full','goes','going','great','green','group','grow','hard','heat','help','here','high','hold','hour','idea','keep','king','knew','land','language','large','later','learn','leave','light','line','list','mean','more','move','near','never','night','nothing','often','open','order','other','place','point','power','press','print','quite','ready','river','round','run','said','school','second','seen','sense','small','sound','space','stand','start','state','still','stood','story','study','surface','system','table','three','told','trees','true','turn','under','until','water','where','which','while','white','whole','whose','wide','young',
-        'ace','age','ago','aim','air','ale','ant','ape','apt','arc','arm','art','ask','ate','awe','axe','aye','bad','bag','ban','bar','bat','bay','bed','bet','bid','big','bit','bog','bow','box','boy','bud','bug','bun','bus','buy','cab','cap','car','cat','cop','cow','cry','cup','cut','dab','dam','dim','dip','dog','dot','dry','dug','dye','ear','eat','egg','ego','elf','elk','elm','end','era','eve','eye','fad','fan','far','fat','fed','few','fig','fit','fix','fly','fog','fun','fur','gap','gas','gel','gem','gin','god','got','gum','gun','gut','guy','gym','hag','ham','hap','hat','hew','hex','hid','hip','hit','hog','hop','hot','hub','hug','hum','ice','icy','ill','imp','ink','ion','ire','irk','ivy','jab','jag','jam','jar','jaw','jet','jog','joy','jug','jut','keg','key','kin','kit','lab','lag','lap','law','lay','lea','led','leg','lid','lip','lit','log','lot','low','lug','mad','map','mat','mob','mod','mom','mop','mud','mug','nag','nap','net','nip','nit','nob','nod','nor','nun','nut','oak','oar','oat','odd','ode','off','oil','old','opt','orb','ore','owe','own','pad','pan','pat','paw','pea','peg','pen','pep','pet','pie','pig','pin','pit','pod','pop','pot','pox','pro','pry','pub','pug','pun','pup','raw','ray','red','rib','rid','rim','rip','rob','rod','rot','row','rub','rug','rum','run','rut','sag','sap','sat','saw','set','sew','sip','sir','sit','six','ski','sky','sob','sod','son','sop','sot','sow','spa','spy','sub','sue','sum','sun','sup','tab','tan','tap','tar','tea','ten','tip','toe','ton','top','toy','try','tub','tug','tun','urn','use','van','vat','vet','via','vie','vim','vow','wag','war','wed','wet','wig','win','wit','woe','wok','won','woo','yak','yam','yap','yaw','yew','zap','zeal','zoom'
+        'the', 'and', 'for', 'are', 'but', 'not', 'you', 'all', 'can', 'her', 'was', 'one', 'our', 'out', 'day', 'get', 'has', 'him', 'his', 'how', 'man', 'new', 'now', 'old', 'see', 'two', 'way', 'who', 'did', 'its', 'let', 'put', 'say', 'she', 'too', 'use', 'that', 'with', 'have', 'this', 'will', 'your', 'from', 'they', 'know', 'want', 'been', 'good', 'much', 'some', 'time', 'very', 'when', 'come', 'here', 'just', 'like', 'long', 'make', 'many', 'over', 'such', 'take', 'than', 'them', 'well', 'were', 'what', 'word', 'also', 'back', 'call', 'came', 'each', 'even', 'find', 'give', 'hand', 'help', 'high', 'hold', 'home', 'keep', 'kind', 'last', 'left', 'life', 'live', 'look', 'made', 'most', 'move', 'much', 'must', 'name', 'need', 'next', 'once', 'only', 'open', 'part', 'play', 'real', 'same', 'show', 'side', 'soon', 'tell', 'than', 'then', 'there', 'think', 'those', 'through', 'together', 'under', 'until', 'upon', 'used', 'very', 'what', 'when', 'while', 'world', 'would', 'year', 'about', 'after', 'again', 'along', 'among', 'asked', 'began', 'being', 'below', 'bring', 'built', 'carry', 'cause', 'close', 'comes', 'could', 'cover', 'cross', 'doing', 'drive', 'early', 'earth', 'eight', 'every', 'face', 'fall', 'five', 'four', 'free', 'full', 'goes', 'going', 'great', 'green', 'group', 'grow', 'hard', 'heat', 'help', 'here', 'high', 'hold', 'hour', 'idea', 'keep', 'king', 'knew', 'land', 'language', 'large', 'later', 'learn', 'leave', 'light', 'line', 'list', 'mean', 'more', 'move', 'near', 'never', 'night', 'nothing', 'often', 'open', 'order', 'other', 'place', 'point', 'power', 'press', 'print', 'quite', 'ready', 'river', 'round', 'run', 'said', 'school', 'second', 'seen', 'sense', 'small', 'sound', 'space', 'stand', 'start', 'state', 'still', 'stood', 'story', 'study', 'surface', 'system', 'table', 'three', 'told', 'trees', 'true', 'turn', 'under', 'until', 'water', 'where', 'which', 'while', 'white', 'whole', 'whose', 'wide', 'young',
+        'ace', 'age', 'ago', 'aim', 'air', 'ale', 'ant', 'ape', 'apt', 'arc', 'arm', 'art', 'ask', 'ate', 'awe', 'axe', 'aye', 'bad', 'bag', 'ban', 'bar', 'bat', 'bay', 'bed', 'bet', 'bid', 'big', 'bit', 'bog', 'bow', 'box', 'boy', 'bud', 'bug', 'bun', 'bus', 'buy', 'cab', 'cap', 'car', 'cat', 'cop', 'cow', 'cry', 'cup', 'cut', 'dab', 'dam', 'dim', 'dip', 'dog', 'dot', 'dry', 'dug', 'dye', 'ear', 'eat', 'egg', 'ego', 'elf', 'elk', 'elm', 'end', 'era', 'eve', 'eye', 'fad', 'fan', 'far', 'fat', 'fed', 'few', 'fig', 'fit', 'fix', 'fly', 'fog', 'fun', 'fur', 'gap', 'gas', 'gel', 'gem', 'gin', 'god', 'got', 'gum', 'gun', 'gut', 'guy', 'gym', 'hag', 'ham', 'hap', 'hat', 'hew', 'hex', 'hid', 'hip', 'hit', 'hog', 'hop', 'hot', 'hub', 'hug', 'hum', 'ice', 'icy', 'ill', 'imp', 'ink', 'ion', 'ire', 'irk', 'ivy', 'jab', 'jag', 'jam', 'jar', 'jaw', 'jet', 'jog', 'joy', 'jug', 'jut', 'keg', 'key', 'kin', 'kit', 'lab', 'lag', 'lap', 'law', 'lay', 'lea', 'led', 'leg', 'lid', 'lip', 'lit', 'log', 'lot', 'low', 'lug', 'mad', 'map', 'mat', 'mob', 'mod', 'mom', 'mop', 'mud', 'mug', 'nag', 'nap', 'net', 'nip', 'nit', 'nob', 'nod', 'nor', 'nun', 'nut', 'oak', 'oar', 'oat', 'odd', 'ode', 'off', 'oil', 'old', 'opt', 'orb', 'ore', 'owe', 'own', 'pad', 'pan', 'pat', 'paw', 'pea', 'peg', 'pen', 'pep', 'pet', 'pie', 'pig', 'pin', 'pit', 'pod', 'pop', 'pot', 'pox', 'pro', 'pry', 'pub', 'pug', 'pun', 'pup', 'raw', 'ray', 'red', 'rib', 'rid', 'rim', 'rip', 'rob', 'rod', 'rot', 'row', 'rub', 'rug', 'rum', 'run', 'rut', 'sag', 'sap', 'sat', 'saw', 'set', 'sew', 'sip', 'sir', 'sit', 'six', 'ski', 'sky', 'sob', 'sod', 'son', 'sop', 'sot', 'sow', 'spa', 'spy', 'sub', 'sue', 'sum', 'sun', 'sup', 'tab', 'tan', 'tap', 'tar', 'tea', 'ten', 'tip', 'toe', 'ton', 'top', 'toy', 'try', 'tub', 'tug', 'tun', 'urn', 'use', 'van', 'vat', 'vet', 'via', 'vie', 'vim', 'vow', 'wag', 'war', 'wed', 'wet', 'wig', 'win', 'wit', 'woe', 'wok', 'won', 'woo', 'yak', 'yam', 'yap', 'yaw', 'yew', 'zap', 'zeal', 'zoom'
       ];
 
       function randomLetter() {
@@ -2266,7 +2663,7 @@ public class BoggleGame implements BoggleGameInterface {
             tile.style.cssText = `
               width:${tileSize}px; height:${tileSize}px;
               display:flex; align-items:center; justify-content:center;
-              font-family:var(--heading-font); font-weight:800; font-size:${Math.floor(tileSize*0.42)}px;
+              font-family:var(--heading-font); font-weight:800; font-size:${Math.floor(tileSize * 0.42)}px;
               letter-spacing:1px;
               border: 1.5px solid ${isHighlighted ? 'var(--accent)' : 'var(--border)'};
               background: ${isHighlighted ? 'rgba(168,212,255,0.15)' : 'var(--surface)'};
@@ -2455,4 +2852,5 @@ public class BoggleGame implements BoggleGameInterface {
     })();
   </script>
 </body>
+
 </html>
