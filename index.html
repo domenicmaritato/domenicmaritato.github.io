@@ -1,1650 +1,624 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Domenic Maritato — Portfolio</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500&display=swap"
-    rel="stylesheet" />
-  <style>
-    :root {
-      --bg: #060d1a;
-      --surface: #0b1526;
-      --border: #1a2a3d;
-      --accent: #a8d4ff;
-      --accent2: #c8eeff;
-      --text: #e8f4ff;
-      --muted: #5a7a99;
-      --heading-font: 'Rajdhani', sans-serif;
-      --mono: 'Space Mono', monospace;
-      --body: 'Outfit', sans-serif;
-    }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--body);
-      font-size: 15px;
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.028;
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    ::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: var(--bg);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border-radius: 2px;
-      opacity: 0.5;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 32px;
-    }
-
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 20px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s, background 0.3s;
-    }
-
-    nav.scrolled {
-      background: rgba(13, 13, 13, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom-color: var(--border);
-    }
-
-    .nav-logo {
-      font-family: var(--heading-font);
-      font-weight: 800;
-      font-size: 22px;
-      letter-spacing: 2px;
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--muted);
-      text-decoration: none;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover {
-      color: var(--accent);
-    }
-
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-grid-lines {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(168, 212, 255, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(168, 212, 255, 0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-      pointer-events: none;
-    }
-
-    .hero-left {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 120px 48px 80px 32px;
-      position: relative;
-      z-index: 2;
-      max-width: 680px;
-    }
-
-    .hero-tag {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--accent);
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      margin-bottom: 24px;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.2s forwards;
-    }
-
-    .hero-name {
-      font-family: var(--heading-font);
-      font-weight: 800;
-      font-size: clamp(60px, 8vw, 130px);
-      line-height: 0.9;
-      letter-spacing: -1px;
-      color: var(--text);
-      opacity: 0;
-      animation: fadeUp 0.7s 0.35s forwards;
-    }
-
-    .hero-name span {
-      color: var(--accent);
-    }
-
-    .hero-sub {
-      margin-top: 28px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.8;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.5s forwards;
-    }
-
-    .hero-cta {
-      margin-top: 40px;
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.65s forwards;
-    }
-
-    .btn {
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      text-decoration: none;
-      padding: 14px 28px;
-      border: 1px solid var(--accent);
-      color: var(--bg);
-      background: var(--accent);
-      transition: all 0.2s;
-      cursor: pointer;
-      display: inline-block;
-    }
-
-    .btn:hover {
-      background: transparent;
-      color: var(--accent);
-    }
-
-    .btn.ghost {
-      background: transparent;
-      color: var(--accent);
-    }
-
-    .btn.ghost:hover {
-      background: var(--accent);
-      color: var(--bg);
-    }
-
-    section {
-      padding: 100px 0;
-    }
-
-    .section-label {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
-    }
-
-    .section-title {
-      font-family: var(--heading-font);
-      font-weight: 800;
-      font-size: clamp(42px, 7vw, 80px);
-      line-height: 0.95;
-      letter-spacing: 1px;
-      color: var(--text);
-      margin-bottom: 60px;
-    }
-
-    #experience {
-      border-top: 1px solid var(--border);
-    }
-
-    .exp-item {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 40px;
-      padding: 40px 0;
-      border-bottom: 1px solid var(--border);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s, transform 0.5s;
-    }
-
-    .exp-item.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    .exp-meta {
-      padding-top: 4px;
-    }
-
-    .exp-date {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--accent);
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-    }
-
-    .exp-company {
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 300;
-    }
-
-    .exp-title {
-      font-family: var(--heading-font);
-      font-weight: 800;
-      font-size: 28px;
-      letter-spacing: 1px;
-      color: var(--text);
-      margin-bottom: 16px;
-    }
-
-    .exp-bullets {
-      list-style: none;
-    }
-
-    .exp-bullets li {
-      font-size: 14px;
-      color: #aaa;
-      line-height: 1.7;
-      padding-left: 18px;
-      position: relative;
-      margin-bottom: 6px;
-    }
-
-    .exp-bullets li::before {
-      content: '→';
-      position: absolute;
-      left: 0;
-      color: var(--accent);
-      font-size: 12px;
-    }
-
-    #projects {
-      border-top: 1px solid var(--border);
-    }
-
-    .demo-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-    }
-
-    .demo-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s, transform 0.5s;
-    }
-
-    .demo-card.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    .demo-card-wide {
-      grid-column: 1 / -1;
-    }
-
-    .demo-card-header {
-      padding: 24px 28px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 16px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .demo-tag {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--accent2);
-      margin-bottom: 6px;
-    }
-
-    .demo-title {
-      font-family: var(--heading-font);
-      font-weight: 800;
-      font-size: 22px;
-      letter-spacing: 1px;
-      color: var(--text);
-    }
-
-    .demo-desc {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.6;
-      max-width: 320px;
-      text-align: right;
-    }
-
-    .demo-header-right {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 10px;
-      flex-shrink: 0;
-    }
-
-    .src-btn {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 6px 13px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s, background 0.15s;
-      white-space: nowrap;
-    }
-
-    .src-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(168, 212, 255, 0.05);
-    }
-
-    #src-modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 1000;
-      background: rgba(4, 8, 16, 0.9);
-      backdrop-filter: blur(8px);
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-
-    #src-modal.open {
-      display: flex;
-    }
-
-    #src-modal-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      max-width: 860px;
-      width: 100%;
-      max-height: 82vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    #src-modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
-      gap: 16px;
-    }
-
-    #src-modal-title {
-      font-family: var(--heading-font);
-      font-weight: 800;
-      font-size: 20px;
-      letter-spacing: 1px;
-      color: var(--accent);
-    }
-
-    #src-modal-close {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 6px 12px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-      flex-shrink: 0;
-    }
-
-    #src-modal-close:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    #src-modal-body {
-      overflow-y: auto;
-      flex: 1;
-    }
-
-    #src-modal-body::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    #src-modal-body::-webkit-scrollbar-track {
-      background: var(--surface);
-    }
-
-    #src-modal-body::-webkit-scrollbar-thumb {
-      background: var(--border);
-      border-radius: 2px;
-    }
-
-    #src-modal-body pre {
-      margin: 0;
-      padding: 22px 24px;
-      font-family: var(--mono);
-      font-size: 12px;
-      line-height: 1.75;
-      color: #8ab4d4;
-      white-space: pre;
-      tab-size: 4;
-      overflow-x: auto;
-    }
-
-    #src-modal-body pre .kw {
-      color: #c8f135;
-    }
-
-    #src-modal-body pre .cm {
-      color: #3d5a72;
-      font-style: italic;
-    }
-
-    #src-modal-body pre .str {
-      color: #3bf7c8;
-    }
-
-    #src-modal-body pre .num {
-      color: #f7a53b;
-    }
-
-    #src-modal-body pre .ann {
-      color: #c8a0ff;
-    }
-
-    .demo-frame {
-      position: relative;
-      width: 100%;
-      height: 340px;
-      background: var(--bg);
-      overflow: hidden;
-      cursor: crosshair;
-    }
-
-    .demo-frame-tall {
-      height: 420px;
-    }
-
-    .demo-frame canvas {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    .demo-overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: rgba(6, 13, 26, 0.82);
-      backdrop-filter: blur(4px);
-      cursor: pointer;
-      z-index: 10;
-      transition: opacity 0.5s;
-    }
-
-    .demo-overlay.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .demo-play-btn {
-      width: 56px;
-      height: 56px;
-      border: 1.5px solid var(--accent);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 12px;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .demo-overlay:hover .demo-play-btn {
-      transform: scale(1.12);
-      box-shadow: 0 0 30px rgba(168, 212, 255, 0.25);
-    }
-
-    .demo-play-btn::after {
-      content: '';
-      width: 0;
-      height: 0;
-      border-style: solid;
-      border-width: 9px 0 9px 16px;
-      border-color: transparent transparent transparent var(--accent);
-      margin-left: 3px;
-    }
-
-    .demo-play-label {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .demo-controls {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      z-index: 5;
-    }
-
-    .dc-btn {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 6px 10px;
-      border: 1px solid var(--border);
-      background: rgba(6, 13, 26, 0.85);
-      color: var(--muted);
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-    }
-
-    .dc-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .dc-btn.active {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(168, 212, 255, 0.06);
-    }
-
-    .demo-hud {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--accent);
-      letter-spacing: 1px;
-      display: flex;
-      gap: 20px;
-      z-index: 5;
-    }
-
-    .pg-hint {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 1px;
-      color: var(--muted);
-      margin-top: 4px;
-      text-align: right;
-    }
-
-    #skills {
-      border-top: 1px solid var(--border);
-    }
-
-    .skills-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-    }
-
-    .skills-group-label {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 24px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .skill-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .skill-chip {
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 1px;
-      padding: 8px 16px;
-      border: 1px solid var(--border);
-      color: var(--text);
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-      cursor: default;
-    }
-
-    .skill-chip:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(200, 241, 53, 0.05);
-    }
-
-    #education {
-      border-top: 1px solid var(--border);
-    }
-
-    .edu-block {
-      display: flex;
-      align-items: flex-start;
-      gap: 48px;
-    }
-
-    .edu-year {
-      font-family: var(--heading-font);
-      font-weight: 800;
-      font-size: 80px;
-      line-height: 1;
-      color: var(--border);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .edu-details {
-      padding-top: 8px;
-    }
-
-    .edu-school {
-      font-family: var(--heading-font);
-      font-weight: 800;
-      font-size: 36px;
-      letter-spacing: 1px;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-
-    .edu-degree {
-      font-family: var(--mono);
-      font-size: 13px;
-      color: var(--accent);
-      letter-spacing: 1px;
-    }
-
-    #contact {
-      border-top: 1px solid var(--border);
-      padding: 100px 0 60px;
-    }
-
-    .contact-big {
-      font-family: var(--heading-font);
-      font-weight: 800;
-      font-size: clamp(50px, 10vw, 130px);
-      line-height: 0.9;
-      color: var(--text);
-      margin-bottom: 48px;
-    }
-
-    .contact-big span {
-      color: var(--accent);
-    }
-
-    .contact-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-family: var(--mono);
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-
-    .contact-row::before {
-      content: '';
-      display: inline-block;
-      width: 24px;
-      height: 1px;
-      background: var(--accent);
-    }
-
-    footer {
-      padding: 32px 32px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 1px;
-    }
-
-    footer span {
-      color: var(--accent);
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(24px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 720px) {
-      .container {
-        padding: 0 20px;
-      }
-
-      nav {
-        padding: 16px 20px;
-      }
-
-      nav .nav-links {
-        display: none;
-      }
-
-      section {
-        padding: 64px 0;
-      }
-
-      #hero {
-        min-height: 100svh;
-        align-items: flex-end;
-      }
-
-      .hero-left {
-        padding: 80px 20px 60px;
-        max-width: 100%;
-      }
-
-      .hero-sub {
-        font-size: 13px;
-      }
-
-      .hero-cta {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-      }
-
-      .btn {
-        width: 100%;
-        text-align: center;
-        padding: 14px 20px;
-      }
-
-      .section-title {
-        margin-bottom: 36px;
-      }
-
-      .exp-item {
-        grid-template-columns: 1fr;
-        gap: 12px;
-        padding: 28px 0;
-      }
-
-      .exp-title {
-        font-size: 22px;
-      }
-
-      .demo-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .demo-card-header {
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .demo-header-right {
-        align-items: flex-start;
-        flex-direction: row;
-        flex-wrap: wrap;
-      }
-
-      .demo-desc {
-        text-align: left;
-        max-width: 100%;
-      }
-
-      .demo-frame {
-        height: 280px;
-      }
-
-      .demo-frame-tall {
-        height: 320px;
-      }
-
-      #boggle-wrap {
-        height: auto !important;
-      }
-
-      #boggle-ui {
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: 20px !important;
-        padding: 16px !important;
-        height: auto !important;
-      }
-
-      #boggle-board-wrap {
-        align-self: center;
-      }
-
-      .skills-layout {
-        grid-template-columns: 1fr;
-        gap: 36px;
-      }
-
-      .edu-block {
-        flex-direction: column;
-        gap: 12px;
-      }
-
-      .edu-year {
-        font-size: 48px;
-      }
-
-      .edu-school {
-        font-size: 26px;
-      }
-
-      .contact-big {
-        font-size: clamp(40px, 14vw, 80px);
-        margin-bottom: 32px;
-      }
-
-      footer {
-        padding: 24px 20px;
-        flex-direction: column;
-        gap: 8px;
-        text-align: center;
-      }
-
-      #src-modal {
-        padding: 12px;
-      }
-
-      #src-modal-body pre {
-        font-size: 11px;
-        padding: 16px;
-      }
-    }
-
-    @media (max-width: 420px) {
-      .hero-left {
-        padding: 72px 16px 48px;
-      }
-
-      .container {
-        padding: 0 16px;
-      }
-
-      .demo-frame {
-        height: 240px;
-      }
-
-      .demo-frame-tall {
-        height: 280px;
-      }
-
-      .dc-btn {
-        font-size: 9px;
-        padding: 5px 8px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Code Highlights</title>
+<style>
+  body {
+    font-family: -apple-system, Segoe UI, Roboto, sans-serif;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+    color: #222;
+    line-height: 1.5;
+  }
+  h1 {
+    font-size: 1.6rem;
+    margin-bottom: 4px;
+  }
+  p.subtitle {
+    color: #666;
+    margin-top: 0;
+    margin-bottom: 40px;
+  }
+  section {
+    margin-bottom: 48px;
+  }
+  h2 {
+    font-size: 1.2rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 6px;
+    margin-bottom: 6px;
+  }
+  .meta {
+    color: #777;
+    font-size: 0.85rem;
+    margin: 0 0 10px;
+  }
+  .desc {
+    margin: 0 0 14px;
+  }
+  pre {
+    background: #f6f8fa;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    font-size: 0.85rem;
+  }
+  code {
+    font-family: Consolas, Menlo, monospace;
+    white-space: pre;
+  }
+</style>
 </head>
-
 <body>
 
-  <div id="src-modal" role="dialog" aria-modal="true" aria-labelledby="src-modal-title">
-    <div id="src-modal-box">
-      <div id="src-modal-header">
-        <span id="src-modal-title"></span>
-        <button id="src-modal-close" onclick="closeSource()">Close &#x2715;</button>
-      </div>
-      <div id="src-modal-body">
-        <pre id="src-modal-pre"></pre>
-      </div>
-    </div>
-  </div>
+<h1>Code Highlights</h1>
+<p class="subtitle">A few projects I've worked on.</p>
 
-  <nav id="nav">
-    <a href="#hero" class="nav-logo">DM</a>
-    <ul class="nav-links">
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+<section>
+  <h2>LZWTool.java</h2>
+  <p class="meta">Java · 286 lines</p>
+  <p class="desc">Command-line LZW compression/decompression tool with configurable code-width bounds and a table-reset policy for handling dictionary overflow.</p>
+  <pre><code>import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
-  <section id="hero">
-    <div class="hero-grid-lines"></div>
-    <div class="hero-left">
-      <div class="hero-tag">Computer Science Student · Pittsburgh, PA</div>
-      <h1 class="hero-name">DOMENIC<br /><span>MARITATO</span></h1>
-      <p class="hero-sub">
-        Motivated CS student with hands-on experience in debugging, developing complex projects,
-        and implementing algorithms. Seeking a technical internship to contribute to impactful software.
-      </p>
-      <div class="hero-cta">
-        <a href="#projects" class="btn">View Projects</a>
-        <a href="#contact" class="btn ghost">Contact Me</a>
-      </div>
-    </div>
-  </section>
+public class LZWTool {
 
-  <section id="experience">
-    <div class="container">
-      <div class="section-label">01 — Experience</div>
-      <h2 class="section-title">WORK</h2>
+	public static void main(String[] args) throws IOException {
 
-      <div class="exp-item">
-        <div class="exp-meta">
-          <div class="exp-date">Jan 2025 — Current</div>
-          <div class="exp-company">UPMC Presbyterian Shadyside Hospital</div>
-        </div>
-        <div class="exp-content">
-          <div class="exp-title">IT CONSULTANT</div>
-          <ul class="exp-bullets">
-            <li>Diagnosed, reinstalled, and repackaged malfunctioning kiosks to restore functionality and improve
-              deployment efficiency</li>
-            <li>Unboxed, organized, and prepared a variety of electronic equipment for installation and site deployment
-            </li>
-            <li>Installed and configured electronic systems across multiple UPMC locations, ensuring proper setup and
-              operational readiness</li>
-          </ul>
-        </div>
-      </div>
+		String alphabetPath = null;
+		String policy = "freeze";
+		String mode = null;
+		int maxBits = 16;
+		int minBits = 9;
 
-      <div class="exp-item">
-        <div class="exp-meta">
-          <div class="exp-date">May 2024 — Aug 2024</div>
-          <div class="exp-company">Friendly Paws Pet Resort</div>
-        </div>
-        <div class="exp-content">
-          <div class="exp-title">DOG HANDLER</div>
-          <ul class="exp-bullets">
-            <li>Developed deep understanding of animal behavior and adapted techniques based on individual traits over
-              time</li>
-            <li>Maintained calm, organized composure in a high-energy, unpredictable environment</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+		for (int i = 0; i &lt; args.length; i++) {
+			switch (args[i]) {
+				case "--mode": {
+					mode = args[++i];
+					break;
+				}
+				case "--minW": {
+					minBits = Integer.parseInt(args[++i]);
+					break;
+				}
+				case "--maxW": {
+					maxBits = Integer.parseInt(args[++i]);
+					break;
+				}
+				case "--policy": {
+					policy = args[++i];
+					break;
+				}
+				case "--alphabet": {
+					alphabetPath = args[++i];
+					break;
+				}
+				default: {
+					System.err.println("Unknown argument: " + args[i]);
+					System.exit(2);
+				}
+			}
+		}
 
-  <section id="projects">
-    <div class="container">
-      <div class="section-label">02 — Projects</div>
-      <h2 class="section-title">BUILDS</h2>
+		if ("expand".equals(mode)) {
+			decodeStream();
+		} else {
+			List&lt;String&gt; syms = readSymbolFile(alphabetPath);
+			encodeStream(syms, minBits, maxBits, policy);
+		}
+	}
 
-      <div class="demo-grid">
+	static List&lt;String&gt; readSymbolFile(String path) throws IOException {
 
-        <div class="demo-card">
-          <div class="demo-card-header">
-            <div>
-              <div class="demo-tag">JavaScript · Canvas</div>
-              <div class="demo-title">PHYSICS SANDBOX</div>
-            </div>
-            <div class="demo-header-right">
-              <div class="demo-desc">Custom particle physics engine — gravity, collisions, explosion forces, glow
-                trails.</div>
-              <button class="src-btn" onclick="showSource('sandbox')">&#60;/&#62; Source</button>
-            </div>
-          </div>
-          <div class="demo-frame" id="proj-sandbox-wrap">
-            <canvas id="proj-sandbox-canvas"></canvas>
-            <div id="proj-sandbox-intro" class="demo-overlay">
-              <div class="demo-play-btn"></div>
-              <span class="demo-play-label">Click to play</span>
-            </div>
-            <div class="demo-controls" id="proj-sandbox-ui" style="display:none;">
-              <button class="dc-btn active" id="ps-balls">Balls</button>
-              <button class="dc-btn" id="ps-explode">Explode</button>
-              <button class="dc-btn" id="ps-gravity">Gravity</button>
-              <button class="dc-btn" id="ps-clear">Clear</button>
-            </div>
-          </div>
-        </div>
+		List&lt;String&gt; syms = new ArrayList&lt;&gt;();
+		LinkedHashSet&lt;String&gt; dupeCheck = new LinkedHashSet&lt;&gt;();
 
-        <div class="demo-card">
-          <div class="demo-card-header">
-            <div>
-              <div class="demo-tag">MIPS Assembly</div>
-              <div class="demo-title">BREAKOUT GAME</div>
-            </div>
-            <div class="demo-header-right">
-              <div class="demo-desc">Ported from MIPS assembly — paddle, ball physics, block destruction, all collision
-                logic rebuilt in JS.</div>
-              <button class="src-btn" onclick="showSource('breakout')">&#60;/&#62; Source</button>
-            </div>
-          </div>
-          <div class="demo-frame" id="breakout-wrap">
-            <canvas id="breakout-canvas"></canvas>
-            <div id="breakout-intro" class="demo-overlay">
-              <div class="demo-play-btn"></div>
-              <span class="demo-play-label">Click to play</span>
-            </div>
-            <div class="demo-hud" id="breakout-hud" style="display:none;">
-              <span id="bo-score">Score: 0</span>
-              <span id="bo-lives">Lives: 3</span>
-            </div>
-          </div>
-        </div>
+		// Use BufferedReader instead of Scanner so that U+0085 (NEL) and other
+		// Unicode line-separator chars are not consumed as line terminators.
+		// BufferedReader.readLine() only splits on \n, \r, and \r\n.
+		BufferedReader br = new BufferedReader(
+				new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8));
+		String ln;
+		while ((ln = br.readLine()) != null) {
+			if (ln.isEmpty()) {
+				continue;
+			}
+			String ch = String.valueOf(ln.charAt(0)); // take first char of each line
+			if (dupeCheck.add(ch)) {
+				syms.add(ch);
+			}
+		}
+		br.close();
 
-        <div class="demo-card demo-card-wide">
-          <div class="demo-card-header">
-            <div>
-              <div class="demo-tag">Java · BFS · Dijkstra</div>
-              <div class="demo-title">NETWORK SECURITY VISUALIZER</div>
-            </div>
-            <div class="demo-header-right">
-              <div class="demo-desc">BFS infection spread + Dijkstra patch routing on a live network graph. Red =
-                vulnerable, blue = secure. Click nodes to toggle. Visualizes the exact algorithms from the Java source.
-              </div>
-              <button class="src-btn" onclick="showSource('pittguard')">&#60;/&#62; Source</button>
-            </div>
-          </div>
-          <div class="demo-frame demo-frame-tall" id="pittguard-wrap">
-            <canvas id="pittguard-canvas"></canvas>
-            <div class="demo-controls" id="pittguard-ui">
-              <button class="dc-btn active" id="pg-infect">Infect</button>
-              <button class="dc-btn" id="pg-patch">Patch</button>
-              <button class="dc-btn" id="pg-reset">Reset</button>
-              <span class="pg-hint" id="pg-hint">Tap a node to start</span>
-            </div>
-          </div>
-        </div>
+		if (dupeCheck.add(String.valueOf((char) 10))) {
+			syms.add(String.valueOf((char) 10));
+		}
 
-        <div class="demo-card demo-card-wide">
-          <div class="demo-card-header">
-            <div>
-              <div class="demo-tag">Java · DFS · Backtracking · Trie</div>
-              <div class="demo-title">BOGGLE GAME ENGINE</div>
-            </div>
-            <div class="demo-header-right">
-              <div class="demo-desc">DFS + backtracking word search on a random board. Pruned via prefix trie. Finds all
-                valid words, checks adjacency, marks paths — mirrors the Java source exactly.</div>
-              <button class="src-btn" onclick="showSource('boggle')">&#60;/&#62; Source</button>
-            </div>
-          </div>
-          <div class="demo-frame demo-frame-tall" id="boggle-wrap" style="cursor:default; height: 480px;">
-            <div id="boggle-ui"
-              style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; gap: 48px; padding: 24px; flex-wrap: wrap;">
-              <div id="boggle-board-wrap" style="display:flex; flex-direction:column; gap:6px; flex-shrink:0;"></div>
-              <div style="flex:1; min-width:240px; max-width:380px; display:flex; flex-direction:column; gap:14px;">
-                <div style="display:flex; gap:8px; align-items:center;">
-                  <input id="boggle-input" type="text" placeholder="Type a word..." autocomplete="off"
-                    spellcheck="false"
-                    style="font-family:var(--mono); font-size:13px; letter-spacing:1px; text-transform:uppercase; background:var(--bg); border:1px solid var(--border); color:var(--text); padding:10px 14px; flex:1; outline:none; transition: border-color 0.2s;" />
-                  <button id="boggle-submit" class="dc-btn" style="padding: 10px 14px;">CHECK</button>
-                </div>
-                <div id="boggle-feedback"
-                  style="font-family:var(--mono); font-size:12px; letter-spacing:1px; color:var(--muted); min-height:18px;">
-                </div>
-                <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                  <button id="boggle-solve" class="dc-btn">Find All Words</button>
-                  <button id="boggle-newboard" class="dc-btn">New Board</button>
-                </div>
-                <div style="border-top:1px solid var(--border); padding-top:12px;">
-                  <div
-                    style="font-family:var(--mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:8px;"
-                    id="boggle-word-count"></div>
-                  <div id="boggle-word-list"
-                    style="display:flex; flex-wrap:wrap; gap:6px; max-height:160px; overflow-y:auto;"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+		if (dupeCheck.add(String.valueOf((char) 13))) {
+			syms.add(String.valueOf((char) 13));
+		}
 
-      </div>
-    </div>
-  </section>
+		return syms;
+	}
 
-  <section id="skills">
-    <div class="container">
-      <div class="section-label">03 — Skills</div>
-      <h2 class="section-title">STACK</h2>
-      <div class="skills-layout">
-        <div>
-          <div class="skills-group-label">Languages</div>
-          <div class="skill-list">
-            <span class="skill-chip">HTML / CSS / JS</span>
-            <span class="skill-chip">Python</span>
-            <span class="skill-chip">Java</span>
-            <span class="skill-chip">C</span>
-            <span class="skill-chip">C#</span>
-            <span class="skill-chip">SQL</span>
-            <span class="skill-chip">MIPS Assembly</span>
-          </div>
-        </div>
-        <div>
-          <div class="skills-group-label">Tools &amp; Platforms</div>
-          <div class="skill-list">
-            <span class="skill-chip">Git</span>
-            <span class="skill-chip">Unity</span>
-            <span class="skill-chip">VS Code</span>
-            <span class="skill-chip">Jupyter Lab</span>
-            <span class="skill-chip">Git Bash / CLI</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+	private static void encodeStream(List&lt;String&gt; syms, int minBits, int maxBits, String tablePolicy) {
 
-  <section id="education">
-    <div class="container">
-      <div class="section-label">04 — Education</div>
-      <h2 class="section-title">SCHOOL</h2>
-      <div class="edu-block">
-        <div class="edu-year">2028</div>
-        <div class="edu-details">
-          <div class="edu-school">UNIVERSITY OF PITTSBURGH</div>
-          <div class="edu-degree">B.S. in Computer Science</div>
-          <div class="edu-degree" style="margin-top:8px; color:var(--muted);">GPA: 3.163</div>
-        </div>
-      </div>
-    </div>
-  </section>
+		BinaryStdOut.write(minBits - 1, 4);
+		BinaryStdOut.write(maxBits - 1, 4);
 
-  <section id="contact">
-    <div class="container">
-      <div class="section-label">05 — Contact</div>
-      <div class="contact-big">LET'S<br /><span>WORK.</span></div>
-      <div class="contact-row">Pittsburgh, PA</div>
-      <div class="contact-row">domenic.maritato@gmail.com</div>
-      <div class="contact-row">412-865-8696</div>
-      <div class="contact-row"><a href="https://www.linkedin.com/in/domenic-maritato-29a5a2332/" target="_blank"
-          style="color:var(--muted); text-decoration:none; transition:color 0.2s;"
-          onmouseover="this.style.color='var(--accent)'"
-          onmouseout="this.style.color='var(--muted)'">linkedin.com/in/domenic-maritato-29a5a2332</a></div>
-      <br /><br />
-		<div class="contact-row"><a href="https://www.github.com/domenicmaritato" target="_blank"
-        style="color:var(--muted); text-decoration:none; transition:color 0.2s;"
-        onmouseover="this.style.color='var(--accent)'"
-        onmouseout="this.style.color='var(--muted)'">github.com/domenicmaritato</a></div>
-      <br /><br />
-      <a href="mailto:domenic.maritato@gmail.com" class="btn" style="margin-top:8px;">Send a Message</a>
-    </div>
-  </section>
+		if (tablePolicy.equals("reset")) {
+			BinaryStdOut.write(1, 1);
+		} else {
+			BinaryStdOut.write(0, 1);
+		}
 
-  <footer>
-    <span>Domenic Maritato</span>
-    <span>&#169; 2025</span>
-  </footer>
+		// Write symCount as 8 bits; 256 symbols wraps to 0 (& 0xFF), decoder treats 0 as 256.
+		BinaryStdOut.write(syms.size() & 0xFF, 8);
 
-  <script>
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 60);
-    });
+		for (String s : syms) {
+			BinaryStdOut.write((byte) s.charAt(0));
+		}
 
-    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-    let audioCtx = null;
+		TSTmod&lt;Integer&gt; dict = new TSTmod&lt;&gt;();
+		for (int i = 0; i &lt; syms.size(); i++) {
+			dict.put(new StringBuilder(syms.get(i)), i);
+		}
 
-    function getAudio() {
-      if (!audioCtx) audioCtx = new AudioCtx();
-      return audioCtx;
-    }
+		// syms.size() = EOF marker (last code written, tells decoder to stop)
+		// syms.size()+1 = reset marker (written before wiping the table)
+		// syms.size()+2 = first real dictionary entry
+		int eofCode = syms.size();
+		int resetCode = syms.size() + 1;
+		int freeSlot = syms.size() + 2;
+		int curWidth = minBits;
+		int widthCap = 1 &lt;&lt; curWidth;
 
-    function soundHover() {
-      try {
-        const ac = getAudio();
-        const osc = ac.createOscillator();
-        const gain = ac.createGain();
-        osc.connect(gain); gain.connect(ac.destination);
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(1800, ac.currentTime);
-        gain.gain.setValueAtTime(0.018, ac.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.05);
-        osc.start(ac.currentTime);
-        osc.stop(ac.currentTime + 0.05);
-      } catch (e) { }
-    }
+		// bump width until both sentinel codes fit in curWidth bits
+		while (widthCap &lt;= resetCode && curWidth &lt; maxBits) {
+			curWidth++;
+			widthCap = 1 &lt;&lt; curWidth;
+		}
 
-    function soundClick() {
-      try {
-        const ac = getAudio();
-        [320, 480].forEach((freq, i) => {
-          const osc = ac.createOscillator();
-          const gain = ac.createGain();
-          osc.connect(gain); gain.connect(ac.destination);
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, ac.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(freq * 0.5, ac.currentTime + 0.09);
-          gain.gain.setValueAtTime(0.09 - i * 0.02, ac.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.09);
-          osc.start(ac.currentTime);
-          osc.stop(ac.currentTime + 0.09);
-        });
-      } catch (e) { }
-    }
+		StringBuilder match = new StringBuilder();
 
-    function soundPop(pitch = 600) {
-      try {
-        const ac = getAudio();
-        const osc = ac.createOscillator();
-        const gain = ac.createGain();
-        osc.connect(gain); gain.connect(ac.destination);
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(pitch, ac.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(pitch * 0.4, ac.currentTime + 0.08);
-        gain.gain.setValueAtTime(0.08, ac.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.08);
-        osc.start(ac.currentTime);
-        osc.stop(ac.currentTime + 0.08);
-      } catch (e) { }
-    }
+		while (!BinaryStdIn.isEmpty()) {
+			char incoming = (char) (BinaryStdIn.readByte() & 0xFF);
+			StringBuilder longer = new StringBuilder(match).append(incoming);
 
-    function soundBounce() {
-      try {
-        const ac = getAudio();
-        const osc = ac.createOscillator();
-        const gain = ac.createGain();
-        osc.connect(gain); gain.connect(ac.destination);
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(180, ac.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(60, ac.currentTime + 0.1);
-        gain.gain.setValueAtTime(0.1, ac.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.1);
-        osc.start(ac.currentTime);
-        osc.stop(ac.currentTime + 0.1);
-      } catch (e) { }
-    }
+			if (dict.contains(longer)) {
+				match = longer;
+				continue;
+			}
 
-    function soundExplode() {
-      try {
-        const ac = getAudio();
-        const bufSize = ac.sampleRate * 0.3;
-        const buf = ac.createBuffer(1, bufSize, ac.sampleRate);
-        const data = buf.getChannelData(0);
-        for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1);
-        const noise = ac.createBufferSource();
-        noise.buffer = buf;
-        const filter = ac.createBiquadFilter();
-        filter.type = 'bandpass';
-        filter.frequency.value = 400;
-        filter.Q.value = 0.5;
-        const gainN = ac.createGain();
-        gainN.gain.setValueAtTime(0.25, ac.currentTime);
-        gainN.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.3);
-        noise.connect(filter); filter.connect(gainN); gainN.connect(ac.destination);
-        noise.start(ac.currentTime); noise.stop(ac.currentTime + 0.3);
-        const sub = ac.createOscillator();
-        const gainS = ac.createGain();
-        sub.connect(gainS); gainS.connect(ac.destination);
-        sub.type = 'sine';
-        sub.frequency.setValueAtTime(120, ac.currentTime);
-        sub.frequency.exponentialRampToValueAtTime(30, ac.currentTime + 0.25);
-        gainS.gain.setValueAtTime(0.4, ac.currentTime);
-        gainS.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.25);
-        sub.start(ac.currentTime); sub.stop(ac.currentTime + 0.25);
-      } catch (e) { }
-    }
+			// if match is empty or the char isn't in the alphabet, skip it
+			if (match.length() == 0 || dict.get(match) == null) {
+				match = new StringBuilder().append(incoming);
+				continue;
+			}
 
-    let lastHover = 0;
-    function attachHoverSounds() {
-      const hoverTargets = document.querySelectorAll('a, button, .btn, .dc-btn, .skill-chip, .demo-overlay, .src-btn');
-      hoverTargets.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-          const now = Date.now();
-          if (now - lastHover < 80) return;
-          lastHover = now;
-          soundHover();
-        });
-      });
-      const clickTargets = document.querySelectorAll('a.btn, button.dc-btn, .demo-overlay, nav a, .src-btn');
-      clickTargets.forEach(el => {
-        el.addEventListener('click', () => soundClick());
-      });
-    }
-    attachHoverSounds();
+			BinaryStdOut.write(dict.get(match), curWidth);
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          setTimeout(() => e.target.classList.add('visible'), e.target.dataset.delay || 0);
-          observer.unobserve(e.target);
+			if (freeSlot &lt; (1 &lt;&lt; maxBits)) {
+				dict.put(longer, freeSlot++);
+
+				if (freeSlot &gt; widthCap && curWidth &lt; maxBits) {
+					curWidth++;
+					widthCap = 1 &lt;&lt; curWidth;
+				}
+			} else {
+				if (tablePolicy.equals("reset")) {
+					BinaryStdOut.write(resetCode, curWidth); // tell decoder to reset too
+
+					dict = new TSTmod&lt;&gt;();
+					for (int i = 0; i &lt; syms.size(); i++) {
+						dict.put(new StringBuilder(syms.get(i)), i);
+					}
+
+					freeSlot = syms.size() + 2;
+					curWidth = minBits;
+					widthCap = 1 &lt;&lt; curWidth;
+
+					// bump width again after reset so sentinels still fit
+					while (widthCap &lt;= resetCode && curWidth &lt; maxBits) {
+						curWidth++;
+						widthCap = 1 &lt;&lt; curWidth;
+					}
+				}
+			}
+
+			match = new StringBuilder().append(incoming);
+		}
+
+		if (match.length() &gt; 0 && dict.get(match) != null) {
+			BinaryStdOut.write(dict.get(match), curWidth);
+		}
+
+		BinaryStdOut.write(eofCode, curWidth); // marks end of stream for decoder
+
+		BinaryStdOut.close();
+	}
+
+	private static void decodeStream() {
+
+		int minBits = BinaryStdIn.readInt(4) + 1;
+		int maxBits = BinaryStdIn.readInt(4) + 1;
+
+		BinaryStdIn.readInt(1); // policy bit - not needed, resets come through as resetCode
+
+		int symCount = BinaryStdIn.readInt(8);
+		// 256 symbols wraps to 0 in 8 bits; treat 0 as 256
+		if (symCount == 0) symCount = 256;
+
+		List&lt;String&gt; syms = new ArrayList&lt;&gt;();
+
+		for (int i = 0; i &lt; symCount; i++) {
+			syms.add(String.valueOf((char) (BinaryStdIn.readByte() & 0xFF)));
+		}
+
+		String[] lookupTable = new String[1 &lt;&lt; maxBits];
+
+		for (int i = 0; i &lt; syms.size(); i++) {
+			lookupTable[i] = syms.get(i);
+		}
+
+		int eofCode = syms.size();
+		int resetCode = syms.size() + 1;
+		int curWidth = minBits;
+		int freeSlot = syms.size() + 2;
+		int widthCap = 1 &lt;&lt; curWidth;
+
+		// bump width until both sentinel codes fit in curWidth bits
+		while (widthCap &lt;= resetCode && curWidth &lt; maxBits) {
+			curWidth++;
+			widthCap = 1 &lt;&lt; curWidth;
+		}
+
+		// read first code separately - no table entry gets added for it
+		int codeword = BinaryStdIn.readInt(curWidth);
+		if (codeword == eofCode) {
+			BinaryStdOut.close();
+			return;
+		}
+		String decoded = lookupTable[codeword];
+		BinaryStdOut.write(decoded);
+
+		while (!BinaryStdIn.isEmpty()) {
+
+			String lastDecoded = decoded;
+			codeword = BinaryStdIn.readInt(curWidth);
+
+			if (codeword == eofCode) {
+				break;
+			}
+
+			if (codeword == resetCode) {
+				lookupTable = new String[1 &lt;&lt; maxBits];
+				for (int i = 0; i &lt; syms.size(); i++) {
+					lookupTable[i] = syms.get(i);
+				}
+
+				freeSlot = syms.size() + 2;
+				curWidth = minBits;
+				widthCap = 1 &lt;&lt; curWidth;
+
+				// bump width again after reset so sentinels still fit
+				while (widthCap &lt;= resetCode && curWidth &lt; maxBits) {
+					curWidth++;
+					widthCap = 1 &lt;&lt; curWidth;
+				}
+
+				// treat the first code after reset like the initial read above:
+				// output it but don't add a table entry
+				if (BinaryStdIn.isEmpty()) {
+					break;
+				}
+				codeword = BinaryStdIn.readInt(curWidth);
+				if (codeword == eofCode) {
+					break;
+				}
+				decoded = lookupTable[codeword];
+				BinaryStdOut.write(decoded);
+				continue;
+			}
+
+			if (codeword == freeSlot) {
+				decoded = lastDecoded + lastDecoded.charAt(0);
+			} else {
+				decoded = lookupTable[codeword];
+			}
+
+			BinaryStdOut.write(decoded);
+
+			if (freeSlot &lt; (1 &lt;&lt; maxBits)) {
+				lookupTable[freeSlot] = lastDecoded + decoded.charAt(0);
+				freeSlot++;
+
+				if (freeSlot == widthCap && curWidth &lt; maxBits) {
+					curWidth++;
+					widthCap = 1 &lt;&lt; curWidth;
+				}
+			}
+		}
+
+		BinaryStdOut.close();
+	}
+}
+</code></pre>
+</section>
+
+<section>
+  <h2>DLBHotspotDetector.java</h2>
+  <p class="meta">Java · 249 lines</p>
+  <p class="desc">Builds a de la Briandais trie from leaked passwords to detect risky substrings ("hotspots") in candidate passwords, tracking frequency and position stats.</p>
+  <pre><code>import java.util.Set;
+import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
+
+public class DLBHotspotDetector implements HotspotDetector {
+
+    private Node root;
+
+    private static class Node {
+        char ch;
+        Node child;
+        Node sibling;
+        boolean isTerminal;
+
+        int freq; // total number of times password appeared
+        int docFreq; // number of passwords containing string
+        int beginCount; // number of times string is at beginning
+        int middleCount;// number of times string is at middle
+        int endCount;// number of times string is at end
+
+        Node(char ch) {
+            this.ch = ch;
+            this.child = null;
+            this.sibling = null;
+            this.isTerminal = false;
+
+            this.freq = 0;
+            this.docFreq = 0;
+            this.beginCount = 0;
+            this.middleCount = 0;
+            this.endCount = 0;
         }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.exp-item').forEach((el, i) => { el.dataset.delay = i * 120; observer.observe(el); });
-    document.querySelectorAll('.demo-card').forEach((el, i) => { el.dataset.delay = i * 100; observer.observe(el); });
-
-    // =====================================================
-    // SOURCE CODE MODAL
-    // =====================================================
-
-    const SOURCE_TITLES = {
-      sandbox: 'Physics Sandbox — JavaScript',
-      breakout: 'Breakout Game — MIPS Assembly',
-      pittguard: 'PittGuard — Java',
-      boggle: 'Boggle Game Engine — Java'
-    };
-
-    const SOURCE_CODE = {};
-
-    SOURCE_CODE.sandbox = `// Physics Sandbox — core simulation loop
-// Each ball: { x, y, vx, vy, r, color }
-
-function spawnBurst(cx, cy, count) {
-  for (let i = 0; i < count; i++) {
-    const angle = (Math.PI * 2 / count) * i + Math.random() * 0.5;
-    const speed = 3 + Math.random() * 5;
-    balls.push({
-      x: cx, y: cy,
-      vx: Math.cos(angle) * speed,
-      vy: Math.sin(angle) * speed - 2,
-      r: 4 + Math.random() * 10,
-      color: COLORS[Math.floor(Math.random() * COLORS.length)]
-    });
-  }
-}
-
-function explode(cx, cy) {
-  balls.forEach(b => {
-    const dx = b.x - cx, dy = b.y - cy;
-    const dist = Math.sqrt(dx*dx + dy*dy) || 1;
-    if (dist < 200) {
-      const force = (200 - dist) / 200 * 20;
-      b.vx += (dx / dist) * force;
-      b.vy += (dy / dist) * force;
     }
-  });
-  for (let i = 0; i < 24; i++) {
-    const angle = (Math.PI * 2 / 24) * i;
-    const speed = 8 + Math.random() * 8;
-    balls.push({ x: cx, y: cy,
-      vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
-      r: 2 + Math.random() * 4, color: '#a8d4ff' });
-  }
+
+    public DLBHotspotDetector() {
+        root = null;
+    }
+
+    // move through sibling list until matching character found
+    private Node findSibling(Node node, char c) {
+
+        // search horizontally across siblings for matching character
+        while (node != null && node.ch != c) {
+            node = node.sibling;
+        }
+
+        return node;
+    }
+
+    // move through sibling list until matching character found or created
+    private Node findOrCreateSibling(Node node, char c) {
+
+        //check
+        if(node == null) {
+            return new Node(c);
+        }
+
+        Node current = node;
+
+        // move through sibling list until matching character found or created
+        while (true) {
+
+            if (current.ch == c)
+                return current;
+
+            if (current.sibling == null) {
+                current.sibling = new Node(c);
+                return current.sibling;
+            }
+
+            current = current.sibling;
+        }
+    }
+
+    // insert a word into the DLB
+    // returns the terminal node for that word
+    private Node insert(String word) {
+
+        // if tree empty, create root node using first character
+        if (root == null) {
+            root = new Node(word.charAt(0));
+        }
+
+        Node current = root;
+
+        for (int index = 0; index &lt; word.length(); index++) {
+
+            char c = word.charAt(index);
+
+            // move through sibling list until matching character found or created
+            current = findOrCreateSibling(current, c);
+
+            // if last character, mark terminal and return node
+            if (index == word.length() - 1) {
+                current.isTerminal = true;
+                return current;
+            }
+
+            // move downward to child node for next character
+            if (current.child == null) {
+                current.child = new Node(word.charAt(index + 1));
+            }
+
+            current = current.child;
+        }
+
+        return null;
+    }
+
+    // search for a word in the DLB
+    private Node searchNode(String word) {
+
+        Node current = root;
+
+        for (int index = 0; index &lt; word.length(); index++) {
+
+            char c = word.charAt(index);
+
+            // search horizontally across siblings for matching character
+            current = findSibling(current, c);
+
+            if (current == null)
+                return null;
+
+            // if last character, only return if it forms a valid complete substring
+            if (index == word.length() - 1) {
+                return current.isTerminal ? current : null;
+            }
+
+            // move down one level to continue matching next character
+            current = current.child;
+        }
+
+        return null;
+    }
+
+    @Override
+    public void addLeakedPassword(String leakedPassword, int minN, int maxN) {
+
+        if (minN &lt;= 0 || maxN &lt;= 0 || minN &gt; maxN) {
+            throw new IllegalArgumentException();
+        }
+
+        if (leakedPassword == null)
+            return;
+
+
+        int length = leakedPassword.length();
+
+        Set&lt;Node&gt; seen = new HashSet&lt;&gt;();
+
+        // generate all substrings within allowed size range
+        for (int start = 0; start &lt; length; start++) {
+
+            for (int size = minN; size &lt;= maxN; size++) {
+
+                if (start + size &gt; length)
+                    break;
+
+                String sub = leakedPassword.substring(start, start + size);
+
+                Node terminal = insert(sub);
+
+                // increment total frequency every time substring appears
+                terminal.freq++;
+
+                if (!seen.contains(terminal)) {
+                    terminal.docFreq++;
+                    seen.add(terminal);
+                }
+
+                // record where substring appears in leaked password
+                if (start == 0) {
+                    terminal.beginCount++;
+                } else if (start + size == length) {
+                    terminal.endCount++;
+                } else {
+                    terminal.middleCount++;
+                }
+            }
+        }
+    }
+
+    @Override
+    public Set&lt;Hotspot&gt; hotspotsIn(String candidatePassword) {
+
+        Set&lt;Hotspot&gt; result = new HashSet&lt;&gt;();
+
+        if (candidatePassword == null)
+            return result;
+
+        int length = candidatePassword.length();
+
+        // use hashmap to prevent duplicates
+        Map&lt;String, Hotspot&gt; map = new HashMap&lt;&gt;();
+
+        // generate candidate substrings within allowed size range
+        for (int start = 0; start &lt; length; start++) {
+
+            for (int size = 1; start + size &lt;= length; size++) {
+
+                if (start + size &gt; length)
+                    break;
+
+                int end = start + size;
+
+                String sub = candidatePassword.substring(start, end);
+
+                // lookup substring in DLB to see if it exists in the data
+                Node terminal = searchNode(sub);
+
+                if (terminal == null)
+                    continue;
+
+                Hotspot h = map.get(sub);
+
+                // if first time seeing substring, create new Hotspot object
+                if (h == null) {
+                    boolean atBegin = (start == 0);
+                    boolean atEnd = (end == length);
+
+                    int middle = (!atBegin && !atEnd) ? 1 : 0;
+
+                    h = new Hotspot(sub, terminal.freq, terminal.docFreq, terminal.beginCount, terminal.middleCount,
+                            terminal.endCount, atBegin, middle, atEnd);
+
+                    // store hotspot in map.. prevents duplicates
+                    map.put(sub, h);
+                } else {
+
+                    // update candidate position
+                    if (start == 0)
+                        h.candidateAtBegin = true;
+
+                    else if (end == length)
+                        h.candidateAtEnd = true;
+
+                    else
+                        h.candidateMiddleCount++;
+                }
+            }
+        }
+
+        // convert map values into final result set
+        result.addAll(map.values());
+
+        return result;
+    }
 }
+</code></pre>
+</section>
 
-function loop() {
-  requestAnimationFrame(loop);
-  const gravity = 0.25 * gravityDir;
-  ctx.fillStyle = '#060d1a';
-  ctx.fillRect(0, 0, W, H);
-  for (let i = balls.length - 1; i >= 0; i--) {
-    const b = balls[i];
-    b.vy += gravity; b.vx *= 0.985; b.vy *= 0.985;
-    b.x += b.vx; b.y += b.vy;
-    if (b.x - b.r < 0)  { b.x = b.r;     b.vx *= -0.7; }
-    if (b.x + b.r > W)  { b.x = W - b.r; b.vx *= -0.7; }
-    if (b.y + b.r > H)  { b.y = H - b.r; b.vy *= -0.6; }
-    ctx.beginPath();
-    ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-    ctx.fillStyle = b.color; ctx.fill();
-  }
-  if (balls.length > 300) balls.splice(0, balls.length - 300);
-}`;
-
-    SOURCE_CODE.breakout = `; Breakout Game - MIPS Assembly (proj1)
-; Domenic Maritato  DMM279
-
-.data
-	debug_framemode: .word 0
-	game_over:       .word 0
-	paddle_x:        .word 0
-	.eqv PADDLE_Y    10000
-	ball_y:          .word 0
-	ball_x:          .word 0
-	ball_old_y:      .word 0
-	ball_old_x:      .word 0
-	ball_vx:         .word 0
-	ball_vy:         .word 0
-	ball_state:      .word STATE_ON_PADDLE
-	blocks: .byte
-		0 0 0 0 0 0 0 1
-		0 0 0 0 0 0 0 1
-		0 0 0 0 0 0 0 1
-		1 1 1 1 1 1 1 1
-		1 0 0 0 0 0 0 1
-		1 0 0 0 0 0 0 1
-		1 0 0 0 0 0 0 1
-		1 1 1 1 1 1 1 1
-		1 0 0 0 0 0 0 1
-		1 0 0 0 0 0 0 1
-.text
-
-update_ball:
-	push	ra
-	lw	t0, ball_state
-	li	t1, STATE_ON_PADDLE
-	beq	t0, t1, ball_on_paddle
-	li	t1, STATE_MOVING
-	beq	t0, t1, ball_moving
-	j	end_update_ball
-
-ball_on_paddle:
-	lw	t0, paddle_x
-	sw	t0, ball_x
-	li	t1, PADDLE_Y
-	sub	t1, t1, BALL_HALFHEIGHT
-	sw	t1, ball_y
-	sw	zero, ball_vx
-	sw	zero, ball_vy
-	; launch on mouse click
-	lw	t0, display_mouse_pressed
-	beqz	t0, end_update_ball
-	li	t0, STATE_MOVING
-	sw	t0, ball_state
-	li	t0, BALL_INITIAL_VX
-	sw	t0, ball_vx
-	li	t0, BALL_INITIAL_VY
-	sw	t0, ball_vy
-	j	end_update_ball
-
-ball_moving:
-	; save old position (used to rollback on collision)
-	lw	t0, ball_x
-	sw	t0, ball_old_x
-	lw	t0, ball_y
-	sw	t0, ball_old_y
-	; step X - check left/right walls + blocks
-	lw	t0, ball_x
-	lw	t1, ball_vx
-	add	t0, t0, t1
-	sw	t0, ball_x
-	jal	ball_check_lr
-	; step Y - check top/bottom + blocks
-	lw	t0, ball_y
-	lw	t1, ball_vy
-	add	t0, t0, t1
-	sw	t0, ball_y
-	jal	ball_check_ud
-	; paddle collision
-	jal	ball_check_paddle
-	beqz	v0, no_paddle_collision
-	lw	t0, ball_vy
-	neg	t0, t0
-	sw	t0, ball_vy
-	no_paddle_collision:
-end_update_ball:
-	pop	ra
-	jr	ra
-
-; ---- Angle bounce using sin/cos lookup table ----
-; Maps hit offset [-HALFWIDTH..+HALFWIDTH] -> angle [0..75 deg]
-ball_bounce_paddle:
-	push	ra
-	lw	t0, ball_old_y
-	sw	t0, ball_y
-	lw	t0, ball_x
-	lw	t1, paddle_x
-	sub	t2, t0, t1
-	abs	t2, t2
-	li	t3, 75
-	mul	t2, t2, t3
-	li	t3, PADDLE_HALFWIDTH
-	div	t2, t2, t3
-	move	a0, t2
-	jal	sin_cos          ; returns v0=sin, v1=cos (scaled x1000000)
-	li	t0, 14142        ; target speed = sqrt(2)*10000
-	mul	v0, v0, t0
-	li	t1, -14142
-	mul	v1, v1, t1
-	li	t0, 1000000
-	div	v0, v0, t0
-	div	v1, v1, t0
-	; negate vx if ball hit left half of paddle
-	lw	t0, ball_x
-	lw	t1, paddle_x
-	bge	t0, t1, skip_negate
-	neg	v0, v0
-skip_negate:
-	sw	v0, ball_vx
-	sw	v1, ball_vy
-	pop	ra
-	jr	ra
-
-; ---- Block collision (left/right) ----
-ball_check_lr:
-	push	ra
-	lw	t0, ball_x
-	li	t1, BALL_MIN_X
-	blt	t0, t1, bounce_horiz
-	li	t1, BALL_MAX_X
-	bgt	t0, t1, bounce_horiz
-	jal	ball_get_block_lr
-	beq	v0, BLOCK_EMPTY, end_ball_check_lr
-	move	a0, v1
-	jal	destroy_block
-bounce_horiz:
-	lw	t0, ball_old_x
-	sw	t0, ball_x
-	lw	t0, ball_vx
-	sub	t0, zero, t0
-	sw	t0, ball_vx
-end_ball_check_lr:
-	pop	ra
-	jr	ra
-
-destroy_block:
-	push	ra
-	li	t0, BLOCK_EMPTY
-	sb	t0, blocks(a0)
-	jal	draw_blocks
-	jal	check_all_blocks_destroyed
-	pop	ra
-	jr	ra
-
-check_all_blocks_destroyed:
-	push	ra
-	li	t0, 0
-_loop:
-	lb	t1, blocks(t0)
-	bne	t1, BLOCK_EMPTY, end_check
-	add	t0, t0, 1
-	blt	t0, N_BLOCKS, _loop
-	li	t0, 1
-	sw	t0, game_over
-end_check:
-	pop	ra
-	jr	ra
-
-update_paddle:
-	push	ra
-	lw	t0, display_mouse_x
-	blt	t0, 0, end_paddle
-	mul	t0, t0, SCALE
-	li	t1, PADDLE_MIN_X
-	blt	t0, t1, set_min_x
-	li	t1, PADDLE_MAX_X
-	bgt	t0, t1, set_max_x
-	j	set_paddle_x
-set_min_x:
-	li	t0, PADDLE_MIN_X
-	j	set_paddle_x
-set_max_x:
-	li	t0, PADDLE_MAX_X
-set_paddle_x:
-	sw	t0, paddle_x
-end_paddle:
-	pop	ra
-	jr	ra`;
-
-    SOURCE_CODE.pittguard = `import java.util.*;
+<section>
+  <h2>PittGuard.java</h2>
+  <p class="meta">Java · 238 lines</p>
+  <p class="desc">Graph tool that models network vulnerability: BFS to trace infection paths between compromised nodes, and Dijkstra to find optimal patch-server routing.</p>
+  <pre><code>import java.util.*;
 import java.io.*;
 
 public class PittGuard {
 
     public static void main(String[] args) throws Exception {
 
+        // grab all the command line stuff
         String mode = null;
         String fileName = null;
         String startNode = null;
@@ -1653,14 +627,28 @@ public class PittGuard {
         boolean directed = false;
 
         int i = 0;
-        while (i < args.length) {
-            if (args[i].equals("--mode"))       { mode = args[i+1];       i += 2; }
-            else if (args[i].equals("--input")) { fileName = args[i+1];   i += 2; }
-            else if (args[i].equals("--src"))   { startNode = args[i+1];  i += 2; }
-            else if (args[i].equals("--dst"))   { endNode = args[i+1];    i += 2; }
-            else if (args[i].equals("--server")){ serverNode = args[i+1]; i += 2; }
-            else if (args[i].equals("--directed")) { directed = true; i++; }
-            else { i++; }
+        while (i &lt; args.length) {
+            if (args[i].equals("--mode")) {
+                mode = args[i + 1];
+                i += 2;
+            } else if (args[i].equals("--input")) {
+                fileName = args[i + 1];
+                i += 2;
+            } else if (args[i].equals("--src")) {
+                startNode = args[i + 1];
+                i += 2;
+            } else if (args[i].equals("--dst")) {
+                endNode = args[i + 1];
+                i += 2;
+            } else if (args[i].equals("--server")) {
+                serverNode = args[i + 1];
+                i += 2;
+            } else if (args[i].equals("--directed")) {
+                directed = true;
+                i++;
+            } else {
+                i++;
+            }
         }
 
         if (mode == null || fileName == null) {
@@ -1668,8 +656,10 @@ public class PittGuard {
             System.exit(1);
         }
 
+        // open the file
         Scanner sc = new Scanner(new File(fileName));
 
+        // skip blank lines and comments to get the node count
         int numNodes = 0;
         while (sc.hasNextLine()) {
             String line = sc.nextLine().trim();
@@ -1680,57 +670,80 @@ public class PittGuard {
         }
 
         // hackable = true means the node is vulnerable
-        HashMap<String, Boolean> hackable = new HashMap<>();
+        HashMap&lt;String, Boolean&gt; hackable = new HashMap&lt;&gt;();
         int count = 0;
         while (sc.hasNextLine() && count != numNodes) {
             String line = sc.nextLine().trim();
-            if (line.isEmpty() || line.startsWith("#")) continue;
-            String[] words = line.split("\s+");
+            if (line.isEmpty() || line.startsWith("#"))
+                continue;
+            String[] words = line.split("\\s+");
             hackable.put(words[0], Boolean.parseBoolean(words[1]));
             count++;
         }
 
-        // build graph - each entry is {neighbor, latency, encryption}
-        HashMap<String, ArrayList<String[]>> graph = new HashMap<>();
-        for (String node : hackable.keySet()) { graph.put(node, new ArrayList<>()); }
+        // build the graph - each entry is {neighbor, latency, encryption}
+        HashMap&lt;String, ArrayList&lt;String[]&gt;&gt; graph = new HashMap&lt;&gt;();
+        for (String node : hackable.keySet()) {
+            graph.put(node, new ArrayList&lt;&gt;());
+        }
 
+        // read all the edges
         while (sc.hasNextLine()) {
             String line = sc.nextLine().trim();
-            if (line.isEmpty() || line.startsWith("#")) continue;
-            String[] words = line.split("\s+");
-            if (words.length < 4) continue;
-            String u = words[0], v = words[1], lat = words[2], enc = words[3];
+            if (line.isEmpty() || line.startsWith("#"))
+                continue;
+            String[] words = line.split("\\s+");
+            if (words.length &lt; 4)
+                continue;
+            String u = words[0];
+            String v = words[1];
+            String lat = words[2];
+            String enc = words[3];
             if (directed) {
-                graph.get(u).add(new String[]{ v, lat, enc });
+                graph.get(u).add(new String[] { v, lat, enc });
             } else {
-                graph.get(u).add(new String[]{ v, lat, enc });
-                graph.get(v).add(new String[]{ u, lat, enc });
+                graph.get(u).add(new String[] { v, lat, enc });
+                graph.get(v).add(new String[] { u, lat, enc });
             }
         }
         sc.close();
 
-        if      (mode.equals("infect")) { runBFS(startNode, endNode, hackable, graph); }
-        else if (mode.equals("patch"))  { runDijkstra(serverNode, hackable, graph); }
-        else { System.err.println("Error: unknown mode " + mode); System.exit(1); }
+        if (mode.equals("infect")) {
+            runBFS(startNode, endNode, hackable, graph);
+        } else if (mode.equals("patch")) {
+            runDijkstra(serverNode, hackable, graph);
+        } else {
+            System.err.println("Error: unknown mode " + mode);
+            System.exit(1);
+        }
     }
 
-    // BFS through vulnerable nodes only
-    static void runBFS(String startNode, String endNode,
-            HashMap<String, Boolean> hackable,
-            HashMap<String, ArrayList<String[]>> graph) {
+    // task 1 - bfs but only through vulnerable nodes
+    static void runBFS(String startNode, String endNode, HashMap&lt;String, Boolean&gt; hackable, HashMap&lt;String, ArrayList&lt;String[]&gt;&gt; graph) {
 
+        if (startNode == null || endNode == null) {
+            System.err.println("Error: need --src and --dst");
+            System.exit(1);
+        }
         if (!hackable.containsKey(startNode) || !hackable.containsKey(endNode)) {
-            System.err.println("Error: unknown node"); System.exit(1);
+            System.err.println("Error: unknown node");
+            System.exit(1);
         }
-        // if either endpoint isn't vulnerable, return -1
-        if (!hackable.get(startNode) || !hackable.get(endNode)) {
-            System.out.println(-1); return;
-        }
-        if (startNode.equals(endNode)) { System.out.println(0); return; }
 
-        // jumpCount tracks hop count to each node
-        HashMap<String, Integer> jumpCount = new HashMap<>();
-        Queue<String> toVisit = new LinkedList<>();
+        // if either endpoint isnt vulnerable just return -1
+        if (!hackable.get(startNode) || !hackable.get(endNode)) {
+            System.out.println(-1);
+            return;
+        }
+
+        if (startNode.equals(endNode)) {
+            System.out.println(0);
+            return;
+        }
+
+        // jumpCount tracks how many hops to reach each node
+        HashMap&lt;String, Integer&gt; jumpCount = new HashMap&lt;&gt;();
+        Queue&lt;String&gt; toVisit = new LinkedList&lt;&gt;();
         jumpCount.put(startNode, 0);
         toVisit.add(startNode);
 
@@ -1738,9 +751,9 @@ public class PittGuard {
             String current = toVisit.poll();
             int stepsSoFar = jumpCount.get(current);
 
-            for (String[] edge : graph.get(current)) {
+            for (String[] edge : graph.get(current)) { //relax
                 String neighbor = edge[0];
-                // only propagate through vulnerable nodes
+                // skip non-vulnerable neighbors
                 if (hackable.get(neighbor) && jumpCount.get(neighbor) == null) {
                     jumpCount.put(neighbor, stepsSoFar + 1);
                     toVisit.add(neighbor);
@@ -1748,1114 +761,298 @@ public class PittGuard {
             }
         }
 
-        System.out.println(jumpCount.containsKey(endNode) ? jumpCount.get(endNode) : -1);
+        // check if we made it to endNode
+        if (jumpCount.containsKey(endNode)) {
+            System.out.println(jumpCount.get(endNode));
+        } else {
+            System.out.println(-1);
+        }
     }
 
-    // Dijkstra from patch server - cost = latency * (1 + (3 - enc) / 10)
-    static void runDijkstra(String serverNode,
-            HashMap<String, Boolean> hackable,
-            HashMap<String, ArrayList<String[]>> graph) {
+    // task 2 - dijkstra from patch server to all vulnerable nodes
+    static void runDijkstra(String serverNode, HashMap&lt;String, Boolean&gt; hackable, HashMap&lt;String, ArrayList&lt;String[]&gt;&gt; graph) {
 
+        if (serverNode == null) {
+            System.err.println("Error: need --server");
+            System.exit(1);
+        }
         if (!hackable.containsKey(serverNode)) {
-            System.err.println("Error: server node doesn't exist"); System.exit(1);
+            System.err.println("Error: server node doesnt exist");
+            System.exit(1);
         }
         if (hackable.get(serverNode)) {
-            System.err.println("Error: server can't be vulnerable"); System.exit(1);
+            System.err.println("Error: server cant be vulnerable");
+            System.exit(1);
         }
 
-        HashMap<String, Double> distances = new HashMap<>();
-        for (String node : hackable.keySet()) { distances.put(node, Double.MAX_VALUE); }
+        // distances starts everything at infinity
+        HashMap&lt;String, Double&gt; distances = new HashMap&lt;&gt;();
+        for (String node : hackable.keySet()) {
+            distances.put(node, Double.MAX_VALUE);
+        }
         distances.put(serverNode, 0.0);
 
-        PriorityQueue<String> pq = new PriorityQueue<>(
-            (a, b) -> Double.compare(distances.get(a), distances.get(b))
-        );
+        // priority queue that picks the cheapest node next
+        Comparator&lt;String&gt; byDist = new Comparator&lt;String&gt;() {
+            public int compare(String a, String b) {
+                return Double.compare(distances.get(a), distances.get(b));
+            }
+        };
+
+        PriorityQueue&lt;String&gt; pq = new PriorityQueue&lt;&gt;(byDist);
         pq.add(serverNode);
-        HashSet<String> seen = new HashSet<>();
+
+        HashSet&lt;String&gt; seen = new HashSet&lt;&gt;();
 
         while (!pq.isEmpty()) {
             String current = pq.poll();
-            if (seen.contains(current)) continue;
+
+            if (seen.contains(current))
+                continue;
             seen.add(current);
+
+            double myCost = distances.get(current);
 
             for (String[] edge : graph.get(current)) {
                 String neighbor = edge[0];
-                double latency  = Double.parseDouble(edge[1]);
-                int    enc      = Integer.parseInt(edge[2]);
+                double latency = Double.parseDouble(edge[1]);
+                int enc = Integer.parseInt(edge[2]);
 
-                // effective cost formula
+                // effective cost formula from the spec
                 double realCost = latency * (1.0 + (3 - enc) / 10.0);
-                double newCost  = distances.get(current) + realCost;
+                double newCost = myCost + realCost;
 
-                if (newCost < distances.get(neighbor)) {
+                if (newCost &lt; distances.get(neighbor)) {
                     distances.put(neighbor, newCost);
                     pq.add(neighbor);
                 }
             }
         }
 
-        // check for unreachable vulnerable nodes
+        // first check if any vulnerable node is totally unreachable
         for (String node : hackable.keySet()) {
             if (hackable.get(node) && distances.get(node) == Double.MAX_VALUE) {
-                System.out.println("INF"); return;
+                System.out.println("INF");
+                return;
             }
         }
 
-        // answer = worst-case patch time across all vulnerable nodes
+        // then grab the biggest distance among vulnerable nodes
         double biggestDist = 0.0;
         for (String node : hackable.keySet()) {
-            if (hackable.get(node) && distances.get(node) > biggestDist)
-                biggestDist = distances.get(node);
+            if (hackable.get(node)) {
+                if (distances.get(node) &gt; biggestDist)
+                    biggestDist = distances.get(node);
+            }
         }
+
         System.out.printf("%.1f%n", biggestDist);
     }
-}`;
+}
+</code></pre>
+</section>
 
-    SOURCE_CODE.boggle = `import java.util.ArrayList;
-import java.util.Random;
-import java.util.HashSet;
+<section>
+  <h2>PittNetShield.java</h2>
+  <p class="meta">Java · 105 lines</p>
+  <p class="desc">Uses Kruskal's algorithm with union-find to compute the minimum-risk spanning structure of a network from edge failure probabilities.</p>
+  <pre><code>import java.util.*;
+import java.io.*;
 
-public class BoggleGame implements BoggleGameInterface {
+public class PittNetShield {
 
-    private char[][] board;
-    private DictInterface dictionary;
-    private boolean[][] used;
-    private HashSet<String> words;
-    private int rows;
-    private int cols;
+    static int[] parent;
+    static int[] rank;
 
-    @Override
-    public char[][] generateBoggleBoard(int size) {
-        if (size <= 0) { return null; }
-        int stringLength = size * size;
-        if (stringLength <= 0) { return null; }
-        String s = generateRandomString(stringLength);
-        char[][] board = new char[size][size];
-        for (int i = 0; i < size; i++)
-            for (int j = 0; j < size; j++)
-                board[i][j] = s.charAt(i * size + j);
-        return board;
+    static int find(int n) {
+        //recursively find the root of the set and do path compression
+        if (parent[n] != n) {
+            parent[n] = find(parent[n]);
+        }
+
+        return parent[n];
     }
 
-    @Override
-    public int countWords(char[][] boggleBoard, DictInterface dictionary) {
-        if (boggleBoard == null || dictionary == null) { return 0; }
-        this.board = boggleBoard;
-        this.dictionary = dictionary;
-        rows = board.length;
-        cols = board[0].length;
-        used  = new boolean[rows][cols];
-        words = new HashSet<>();   // HashSet deduplicates words
-
-        for (int r = 0; r < rows; r++)
-            for (int c = 0; c < cols; c++)
-                dfs(r, c, new StringBuilder());
-
-        return words.size();
+    static void union(int x, int y) {
+        int rootX = find(x), rootY = find(y);
+        if (rootX == rootY)
+            return;
+        if (rank[rootX] &lt; rank[rootY])
+            parent[rootX] = rootY;
+        else if (rank[rootX] &gt; rank[rootY])
+            parent[rootY] = rootX;
+        else {
+            parent[rootY] = rootX;
+            rank[rootX]++;
+        }
     }
 
-    // DFS + backtracking word search, pruned by trie prefix
-    private void dfs(int r, int c, StringBuilder current) {
-        if (r < 0 || c < 0 || r >= rows || c >= cols) return;
-        if (used[r][c]) return;
+    public static void main(String[] args) throws Exception {
+        Scanner scanner = new Scanner(new File(args[0]));
 
-        current.append(board[r][c]);
+        int numNodes = scanner.nextInt();
+        scanner.nextLine();
 
-        // searchPrefix: 0=dead-end  1=prefix  2=word  3=both
-        int result = dictionary.searchPrefix(
-            new StringBuilder(current.toString().toLowerCase())
-        );
+        Map&lt;String, Integer&gt; nodeMap = new HashMap&lt;&gt;();
 
-        if (result == 0) {     // prune - nothing valid down this path
-            current.deleteCharAt(current.length() - 1);
+        for (int i = 0; i &lt; numNodes; i++) {
+            nodeMap.put(scanner.nextLine().trim(), i);
+        }
+
+        List&lt;double[]&gt; edgeList = new ArrayList&lt;&gt;();
+
+        while (scanner.hasNextLine()) {
+
+            String line = scanner.nextLine().trim();
+            if (line.isEmpty())
+                continue;
+            String[] tokens = line.split("\\s+");
+            int src = nodeMap.get(tokens[0]);
+            int dst = nodeMap.get(tokens[1]);
+
+            double prob = Double.parseDouble(tokens[2]);
+            // convert probability to a weight
+            double weight = -Math.log(1 - prob);
+            edgeList.add(new double[] {weight, src, dst});
+
+        }
+
+        if (numNodes == 1) {
+            System.out.println("0");
             return;
         }
-        if (current.length() >= 3 && (result == 2 || result == 3))
-            words.add(current.toString());
 
-        used[r][c] = true;     // lock tile for this path
-
-        for (int br = -1; br <= 1; br++)
-            for (int bc = -1; bc <= 1; bc++) {
-                if (br == 0 && bc == 0) continue;
-                dfs(r + br, c + bc, current);  // explore all 8 neighbors
+        Collections.sort(edgeList, new Comparator&lt;double[]&gt;() {
+            // sort by weight... kruskal's
+            public int compare(double[] a, double[] b) {
+                return Double.compare(a[0], b[0]);
             }
-
-        used[r][c] = false;    // backtrack - unlock tile
-        current.deleteCharAt(current.length() - 1);
-    }
-
-    @Override
-    public boolean isWordInBoard(char[][] boggleBoard, String word) {
-        if (boggleBoard == null || word == null) { return false; }
-        this.board = boggleBoard;
-        rows = board.length;
-        cols = board[0].length;
-        for (int r = 0; r < rows; r++)
-            for (int c = 0; c < cols; c++) {
-                used = new boolean[rows][cols];
-                if (dfsMatch(r, c, word, 0)) return true;
-            }
-        return false;
-    }
-
-    private boolean dfsMatch(int r, int c, String word, int index) {
-        if (r < 0 || c < 0 || r >= rows || c >= cols) return false;
-        if (used[r][c]) return false;
-        if (Character.toLowerCase(board[r][c]) != word.charAt(index)) return false;
-        if (index == word.length() - 1) return true;
-        used[r][c] = true;
-        for (int br = -1; br <= 1; br++)
-            for (int bc = -1; bc <= 1; bc++) {
-                if (br == 0 && bc == 0) continue;
-                if (dfsMatch(r + br, c + bc, word, index + 1)) {
-                    used[r][c] = false; return true;
-                }
-            }
-        used[r][c] = false;
-        return false;
-    }
-
-    // markWordInBoard: returns the tile path so the UI can highlight it
-    @Override
-    public ArrayList<Tile> markWordInBoard(char[][] boggleBoard, String word) {
-        if (boggleBoard == null || word == null) { return null; }
-        this.board = boggleBoard;
-        rows = board.length;
-        cols = board[0].length;
-        for (int r = 0; r < rows; r++)
-            for (int c = 0; c < cols; c++) {
-                used = new boolean[rows][cols];
-                ArrayList<Tile> result = dfsMark(r, c, word, 0);
-                if (result != null) return result;
-            }
-        return null;
-    }
-
-    private ArrayList<Tile> dfsMark(int r, int c, String word, int idx) {
-        if (r < 0 || c < 0 || r >= rows || c >= cols) return null;
-        if (used[r][c]) return null;
-        if (Character.toLowerCase(board[r][c]) != word.charAt(idx)) return null;
-
-        ArrayList<Tile> path = new ArrayList<>();
-        path.add(new Tile(r, c));
-        if (idx == word.length() - 1) return path;  // full word matched
-
-        used[r][c] = true;
-        for (int br = -1; br <= 1; br++)
-            for (int bc = -1; bc <= 1; bc++) {
-                if (br == 0 && bc == 0) continue;
-                ArrayList<Tile> next = dfsMark(r + br, c + bc, word, idx + 1);
-                if (next != null) {
-                    path.addAll(next);
-                    used[r][c] = false;
-                    return path;
-                }
-            }
-        used[r][c] = false;
-        return null;
-    }
-
-    @Override
-    public boolean checkTiles(char[][] boggleBoard, ArrayList<Tile> tiles, String word) {
-        if (tiles == null || word == null) { return false; }
-        if (tiles.size() != word.length()) { return false; }
-        HashSet<String> visited = new HashSet<>();
-        for (int i = 0; i < tiles.size(); i++) {
-            Tile curr = tiles.get(i);
-            char boardLetter = boggleBoard[curr.row][curr.col];
-            char wordLetter  = word.charAt(i);
-            String key = curr.row + "," + curr.col;
-            if (visited.contains(key)) { return false; }
-            if (Character.toLowerCase(boardLetter) != Character.toLowerCase(wordLetter)) { return false; }
-            if (i == 0) { visited.add(key); continue; }
-            Tile prev = tiles.get(i - 1);
-            int rowDiff = Math.abs(curr.row - prev.row);
-            int colDiff = Math.abs(curr.col - prev.col);
-            if (rowDiff > 1 || colDiff > 1) { return false; }
-            visited.add(key);
-        }
-        return true;
-    }
-}`;
-
-    const LANG_MAP = {
-      sandbox: 'js',
-      breakout: 'asm',
-      pittguard: 'java',
-      boggle: 'java'
-    };
-
-    function escHtml(s) {
-      return s
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-    }
-
-    function syntaxHL(code, lang) {
-      // Tokenise in one pass so already-emitted span tags are never re-matched.
-      // Strategy: scan left-to-right; when we hit a recognised token emit a span;
-      // everything else is emitted as escaped plain text.
-
-      function esc(t) {
-        return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      }
-
-      const javaKws = new Set(['abstract', 'assert', 'boolean', 'break', 'byte', 'case',
-        'catch', 'char', 'class', 'const', 'continue', 'default', 'do', 'double', 'else',
-        'enum', 'extends', 'final', 'finally', 'float', 'for', 'goto', 'if', 'implements',
-        'import', 'instanceof', 'int', 'interface', 'long', 'native', 'new', 'package',
-        'private', 'protected', 'public', 'return', 'short', 'static', 'strictfp', 'super',
-        'switch', 'synchronized', 'this', 'throw', 'throws', 'transient', 'try', 'void',
-        'volatile', 'while', 'null', 'true', 'false',
-        'HashMap', 'HashSet', 'ArrayList', 'LinkedList', 'Queue', 'PriorityQueue',
-        'String', 'StringBuilder', 'Scanner', 'File', 'Random']);
-
-      const asmKws = new Set(['push', 'pop', 'jr', 'jal', 'lw', 'sw', 'lb', 'sb', 'li', 'la',
-        'lstr', 'add', 'sub', 'mul', 'div', 'beq', 'bne', 'blt', 'bgt', 'ble', 'bge', 'beqz',
-        'bnez', 'j', 'move', 'neg', 'abs', 'srl', 'sra', 'sll', 'and', 'or', 'xor', 'not',
-        'syscall', 'nop']);
-
-      const jsKws = new Set(['function', 'return', 'const', 'let', 'var', 'for', 'while',
-        'if', 'else', 'new', 'this', 'null', 'true', 'false', 'void', 'typeof', 'instanceof',
-        'class', 'extends', 'import', 'export', 'default', 'break', 'continue', 'switch',
-        'case', 'throw', 'try', 'catch', 'finally', 'async', 'await', 'of', 'in']);
-
-      const kws = lang === 'asm' ? asmKws : lang === 'java' ? javaKws : jsKws;
-
-      let out = '';
-      let i = 0;
-      const n = code.length;
-
-      while (i < n) {
-        // Single-line comment
-        if ((lang === 'java' || lang === 'js') && code[i] === '/' && code[i + 1] === '/') {
-          let end = code.indexOf('\n', i);
-          if (end === -1) end = n;
-          out += '<span class="cm">' + esc(code.slice(i, end)) + '</span>';
-          i = end;
-          continue;
-        }
-        // Block comment
-        if ((lang === 'java' || lang === 'js') && code[i] === '/' && code[i + 1] === '*') {
-          let end = code.indexOf('*/', i + 2);
-          if (end === -1) end = n - 2; else end += 2;
-          out += '<span class="cm">' + esc(code.slice(i, end)) + '</span>';
-          i = end;
-          continue;
-        }
-        // ASM comment
-        if (lang === 'asm' && code[i] === ';') {
-          let end = code.indexOf('\n', i);
-          if (end === -1) end = n;
-          out += '<span class="cm">' + esc(code.slice(i, end)) + '</span>';
-          i = end;
-          continue;
-        }
-        // ASM # comment
-        if (lang === 'asm' && code[i] === '#') {
-          let end = code.indexOf('\n', i);
-          if (end === -1) end = n;
-          out += '<span class="cm">' + esc(code.slice(i, end)) + '</span>';
-          i = end;
-          continue;
-        }
-        // String literal
-        if (code[i] === '"') {
-          let j = i + 1;
-          while (j < n && !(code[j] === '"' && code[j - 1] !== '\\')) j++;
-          j++;
-          out += '<span class="str">' + esc(code.slice(i, j)) + '</span>';
-          i = j;
-          continue;
-        }
-        // Annotation
-        if (code[i] === '@') {
-          let j = i + 1;
-          while (j < n && /\w/.test(code[j])) j++;
-          out += '<span class="ann">' + esc(code.slice(i, j)) + '</span>';
-          i = j;
-          continue;
-        }
-        // Word (keyword, identifier, or number-prefixed)
-        if (/[a-zA-Z_$]/.test(code[i])) {
-          let j = i;
-          while (j < n && /[\w$]/.test(code[j])) j++;
-          const word = code.slice(i, j);
-          if (kws.has(word)) {
-            out += '<span class="kw">' + esc(word) + '</span>';
-          } else {
-            out += esc(word);
-          }
-          i = j;
-          continue;
-        }
-        // Number
-        if (/[0-9]/.test(code[i])) {
-          let j = i;
-          while (j < n && /[0-9a-fA-FxX_.]/.test(code[j])) j++;
-          out += '<span class="num">' + esc(code.slice(i, j)) + '</span>';
-          i = j;
-          continue;
-        }
-        // Everything else: emit escaped
-        out += esc(code[i]);
-        i++;
-      }
-
-      return out;
-    }
-
-    function showSource(key) {
-      soundClick();
-      const modal = document.getElementById('src-modal');
-      document.getElementById('src-modal-title').textContent = SOURCE_TITLES[key];
-      document.getElementById('src-modal-pre').innerHTML =
-        syntaxHL(SOURCE_CODE[key], LANG_MAP[key]);
-      modal.classList.add('open');
-      document.body.style.overflow = 'hidden';
-      document.getElementById('src-modal-body').scrollTop = 0;
-    }
-
-    function closeSource() {
-      document.getElementById('src-modal').classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    document.getElementById('src-modal').addEventListener('click', function (e) {
-      if (e.target === this) closeSource();
-    });
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeSource();
-    });
-
-    // =====================================================
-    // PHYSICS SANDBOX
-    // =====================================================
-    (function initPhysicsSandbox() {
-      const canvas = document.getElementById('proj-sandbox-canvas');
-      const ctx = canvas.getContext('2d');
-      const intro = document.getElementById('proj-sandbox-intro');
-      const ui = document.getElementById('proj-sandbox-ui');
-
-      let balls = [];
-      let running = false;
-      let mode = 'balls';
-      let gravityDir = 1;
-
-      const COLORS = ['#c8f135', '#3bf7c8', '#f7a53b', '#f73b7a', '#a53bf7', '#ffffff'];
-
-      function resize() {
-        const rect = canvas.parentElement.getBoundingClientRect();
-        canvas.width = rect.width;
-        canvas.height = rect.height;
-      }
-      resize();
-      window.addEventListener('resize', resize);
-
-      intro.addEventListener('click', () => {
-        intro.classList.add('hidden');
-        ui.style.display = 'flex';
-        running = true;
-        spawnBurst(canvas.width / 2, canvas.height / 2, 18);
-        loop();
-      });
-
-      canvas.addEventListener('click', (e) => {
-        if (!running) return;
-        const rect = canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        if (mode === 'balls') spawnBurst(x, y, 6);
-        else if (mode === 'explode') explode(x, y);
-      });
-
-      canvas.addEventListener('touchstart', (e) => {
-        if (!running) return;
-        e.preventDefault();
-        const rect = canvas.getBoundingClientRect();
-        Array.from(e.changedTouches).forEach(t => {
-          const x = t.clientX - rect.left;
-          const y = t.clientY - rect.top;
-          if (mode === 'balls') spawnBurst(x, y, 6);
-          else if (mode === 'explode') explode(x, y);
         });
-      }, { passive: false });
 
-      document.getElementById('ps-balls').addEventListener('click', () => setMode('balls'));
-      document.getElementById('ps-explode').addEventListener('click', () => setMode('explode'));
-      document.getElementById('ps-gravity').addEventListener('click', () => {
-        gravityDir *= -1;
-        const btn = document.getElementById('ps-gravity');
-        btn.textContent = gravityDir > 0 ? 'Gravity Down' : 'Gravity Up';
-        btn.classList.toggle('active');
-      });
-      document.getElementById('ps-clear').addEventListener('click', () => { balls = []; });
+        parent = new int[numNodes];
+        rank = new int[numNodes];
 
-      function setMode(m) {
-        mode = m;
-        document.querySelectorAll('#proj-sandbox-ui .dc-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(m === 'balls' ? 'ps-balls' : 'ps-explode').classList.add('active');
-      }
-
-      function spawnBurst(cx, cy, count) {
-        soundPop(400 + Math.random() * 400);
-        for (let i = 0; i < count; i++) {
-          const angle = (Math.PI * 2 / count) * i + Math.random() * 0.5;
-          const speed = 3 + Math.random() * 5;
-          const r = 4 + Math.random() * 10;
-          balls.push({
-            x: cx, y: cy,
-            vx: Math.cos(angle) * speed,
-            vy: Math.sin(angle) * speed - 2,
-            r,
-            color: COLORS[Math.floor(Math.random() * COLORS.length)],
-          });
-        }
-      }
-
-      function explode(cx, cy) {
-        soundExplode();
-        balls.forEach(b => {
-          const dx = b.x - cx, dy = b.y - cy;
-          const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-          if (dist < 200) {
-            const force = (200 - dist) / 200 * 20;
-            b.vx += (dx / dist) * force;
-            b.vy += (dy / dist) * force;
-          }
-        });
-        for (let i = 0; i < 24; i++) {
-          const angle = (Math.PI * 2 / 24) * i;
-          const speed = 8 + Math.random() * 8;
-          balls.push({
-            x: cx, y: cy,
-            vx: Math.cos(angle) * speed,
-            vy: Math.sin(angle) * speed,
-            r: 2 + Math.random() * 4,
-            color: '#a8d4ff',
-          });
-        }
-      }
-
-      let lastBounce = 0;
-      function tryBounceSound() {
-        const now = Date.now();
-        if (now - lastBounce > 80) { soundBounce(); lastBounce = now; }
-      }
-
-      function loop() {
-        requestAnimationFrame(loop);
-        const W = canvas.width, H = canvas.height;
-        ctx.fillStyle = '#060d1a';
-        ctx.fillRect(0, 0, W, H);
-        const gravity = 0.25 * gravityDir;
-
-        for (let i = balls.length - 1; i >= 0; i--) {
-          const b = balls[i];
-          b.vy += gravity;
-          b.vx *= 0.985;
-          b.vy *= 0.985;
-          b.x += b.vx;
-          b.y += b.vy;
-
-          if (b.x - b.r < 0) { b.x = b.r; b.vx *= -0.7; if (Math.abs(b.vx) > 1) tryBounceSound(); }
-          if (b.x + b.r > W) { b.x = W - b.r; b.vx *= -0.7; if (Math.abs(b.vx) > 1) tryBounceSound(); }
-          if (gravityDir > 0 && b.y + b.r > H) {
-            b.y = H - b.r; b.vy *= -0.6;
-            if (Math.abs(b.vy) > 1) tryBounceSound();
-            if (Math.abs(b.vx) < 0.1) b.vx = 0;
-          }
-          if (gravityDir < 0 && b.y - b.r < 0) {
-            b.y = b.r; b.vy *= -0.6;
-            if (Math.abs(b.vy) > 1) tryBounceSound();
-          }
-
-          ctx.beginPath();
-          ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-          ctx.fillStyle = b.color;
-          ctx.fill();
+        for (int i = 0; i &lt; numNodes; i++) {
+            parent[i] = i;
         }
 
-        if (balls.length > 300) balls.splice(0, balls.length - 300);
-      }
-    })();
+        double totalWeight = 0;
+        int count = 0;
 
-    // =====================================================
-    // BREAKOUT
-    // =====================================================
-    (function initBreakout() {
-      const canvas = document.getElementById('breakout-canvas');
-      const ctx = canvas.getContext('2d');
-      const intro = document.getElementById('breakout-intro');
-      const hud = document.getElementById('breakout-hud');
-
-      let running = false;
-      let score = 0, lives = 3;
-      let paddle, ball, bricks;
-      let keys = {};
-      let gameOver = false;
-
-      function resize() {
-        const rect = canvas.parentElement.getBoundingClientRect();
-        canvas.width = rect.width;
-        canvas.height = rect.height;
-      }
-      resize();
-      window.addEventListener('resize', () => { resize(); if (running) init(); });
-
-      intro.addEventListener('click', () => {
-        intro.classList.add('hidden');
-        hud.style.display = 'flex';
-        running = true;
-        init();
-        loop();
-      });
-
-      window.addEventListener('keydown', e => { keys[e.key] = true; });
-      window.addEventListener('keyup', e => { keys[e.key] = false; });
-
-      canvas.addEventListener('mousemove', e => {
-        if (!running || !paddle) return;
-        const rect = canvas.getBoundingClientRect();
-        paddle.x = Math.max(0, Math.min(canvas.width - paddle.w, e.clientX - rect.left - paddle.w / 2));
-      });
-
-      canvas.addEventListener('touchmove', e => {
-        if (!running || !paddle) return;
-        e.preventDefault();
-        const rect = canvas.getBoundingClientRect();
-        paddle.x = Math.max(0, Math.min(canvas.width - paddle.w, e.touches[0].clientX - rect.left - paddle.w / 2));
-      }, { passive: false });
-
-      function init() {
-        const W = canvas.width, H = canvas.height;
-        score = 0; lives = 3; gameOver = false;
-        document.getElementById('bo-score').textContent = 'Score: 0';
-        document.getElementById('bo-lives').textContent = 'Lives: 3';
-
-        paddle = { x: W / 2 - 50, y: H - 30, w: 80, h: 10 };
-        ball = { x: W / 2, y: H - 50, vx: 3, vy: -4, r: 7 };
-
-        const cols = 8, rows = 4;
-        const bw = (W - 40) / cols, bh = 22;
-        bricks = [];
-        const colors = ['#f73b7a', '#f7a53b', '#c8f135', '#3bf7c8'];
-        for (let r = 0; r < rows; r++) {
-          for (let c = 0; c < cols; c++) {
-            bricks.push({ x: 20 + c * bw, y: 50 + r * (bh + 6), w: bw - 4, h: bh, alive: true, color: colors[r] });
-          }
-        }
-      }
-
-      function loop() {
-        requestAnimationFrame(loop);
-        if (!running) return;
-        const W = canvas.width, H = canvas.height;
-
-        ctx.clearRect(0, 0, W, H);
-        ctx.fillStyle = '#060d1a';
-        ctx.fillRect(0, 0, W, H);
-
-        if (gameOver) {
-          ctx.fillStyle = '#a8d4ff';
-          ctx.font = 'bold 28px Rajdhani, sans-serif';
-          ctx.textAlign = 'center';
-          ctx.fillText(score > 0 && bricks.every(b => !b.alive) ? 'YOU WIN' : 'GAME OVER', W / 2, H / 2 - 10);
-          ctx.font = '13px Space Mono, monospace';
-          ctx.fillStyle = '#5a7a99';
-          ctx.fillText('click to restart', W / 2, H / 2 + 20);
-          ctx.textAlign = 'left';
-          return;
-        }
-
-        if (keys['ArrowLeft']) paddle.x = Math.max(0, paddle.x - 6);
-        if (keys['ArrowRight']) paddle.x = Math.min(W - paddle.w, paddle.x + 6);
-
-        ball.x += ball.vx;
-        ball.y += ball.vy;
-
-        if (ball.x - ball.r < 0) { ball.x = ball.r; ball.vx *= -1; }
-        if (ball.x + ball.r > W) { ball.x = W - ball.r; ball.vx *= -1; }
-        if (ball.y - ball.r < 0) { ball.y = ball.r; ball.vy *= -1; }
-
-        if (
-          ball.y + ball.r > paddle.y &&
-          ball.y + ball.r < paddle.y + paddle.h + Math.abs(ball.vy) &&
-          ball.x > paddle.x && ball.x < paddle.x + paddle.w
-        ) {
-          ball.vy = -Math.abs(ball.vy);
-          const hit = (ball.x - (paddle.x + paddle.w / 2)) / (paddle.w / 2);
-          ball.vx = hit * 5;
-          soundBounce();
-        }
-
-        if (ball.y - ball.r > H) {
-          lives--;
-          document.getElementById('bo-lives').textContent = 'Lives: ' + lives;
-          if (lives <= 0) { gameOver = true; return; }
-          ball.x = W / 2; ball.y = H - 50;
-          ball.vx = 3; ball.vy = -4;
-        }
-
-        for (const b of bricks) {
-          if (!b.alive) continue;
-          if (ball.x + ball.r > b.x && ball.x - ball.r < b.x + b.w &&
-            ball.y + ball.r > b.y && ball.y - ball.r < b.y + b.h) {
-            b.alive = false;
-            ball.vy *= -1;
-            score += 10;
-            document.getElementById('bo-score').textContent = 'Score: ' + score;
-            soundPop(500 + Math.random() * 300);
-          }
-        }
-
-        if (bricks.every(b => !b.alive)) { gameOver = true; return; }
-
-        for (const b of bricks) {
-          if (!b.alive) continue;
-          ctx.fillStyle = b.color;
-          ctx.fillRect(b.x, b.y, b.w, b.h);
-        }
-
-        ctx.fillStyle = '#a8d4ff';
-        ctx.fillRect(paddle.x, paddle.y, paddle.w, paddle.h);
-
-        ctx.beginPath();
-        ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-      }
-
-      canvas.addEventListener('click', () => {
-        if (gameOver) { init(); }
-      });
-    })();
-
-    // =====================================================
-    // PITTGUARD
-    // =====================================================
-    (function initPittguard() {
-      const canvas = document.getElementById('pittguard-canvas');
-      const ctx = canvas.getContext('2d');
-
-      let mode = 'infect';
-      let nodes = [];
-      let edges = [];
-      let animQueue = [];
-      let animating = false;
-
-      function resize() {
-        const rect = canvas.parentElement.getBoundingClientRect();
-        canvas.width = rect.width;
-        canvas.height = rect.height;
-        buildGraph();
-        draw();
-      }
-      resize();
-      window.addEventListener('resize', resize);
-
-      function buildGraph() {
-        const W = canvas.width, H = canvas.height;
-        const cellSize = Math.min(W, H) < 400 ? 55 : 70;
-        const cols = Math.max(3, Math.floor((W - 40) / cellSize));
-        const rows = Math.max(3, Math.floor((H - 40) / cellSize));
-        const xStep = (W - 40) / cols;
-        const yStep = (H - 40) / rows;
-        const jitter = Math.min(xStep, yStep) * 0.35;
-        nodes = [];
-        for (let r = 0; r <= rows; r++) {
-          for (let c = 0; c <= cols; c++) {
-            nodes.push({
-              x: 20 + c * xStep + (Math.random() - 0.5) * jitter * 2,
-              y: 20 + r * yStep + (Math.random() - 0.5) * jitter * 2,
-              state: 'neutral',
-              id: nodes.length
-            });
-          }
-        }
-        const connectDist = Math.max(xStep, yStep) * 1.6;
-        edges = [];
-        for (let i = 0; i < nodes.length; i++) {
-          for (let j = i + 1; j < nodes.length; j++) {
-            const dx = nodes[i].x - nodes[j].x;
-            const dy = nodes[i].y - nodes[j].y;
-            if (Math.sqrt(dx * dx + dy * dy) < connectDist) edges.push([i, j]);
-          }
-        }
-      }
-
-      function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#060d1a';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        for (const [a, b] of edges) {
-          ctx.beginPath();
-          ctx.moveTo(nodes[a].x, nodes[a].y);
-          ctx.lineTo(nodes[b].x, nodes[b].y);
-          ctx.strokeStyle = '#1a2a3d';
-          ctx.lineWidth = 1;
-          ctx.stroke();
-        }
-
-        for (const n of nodes) {
-          const color = n.state === 'infected' ? '#f73b7a' : n.state === 'secure' ? '#3bf7c8' : '#5a7a99';
-          ctx.beginPath();
-          ctx.arc(n.x, n.y, 10, 0, Math.PI * 2);
-          ctx.fillStyle = color;
-          ctx.fill();
-        }
-      }
-
-      function bfsInfect(startId) {
-        const visited = new Set([startId]);
-        const queue = [startId];
-        const order = [];
-        nodes[startId].state = 'infected';
-        while (queue.length) {
-          const cur = queue.shift();
-          for (const [a, b] of edges) {
-            const neighbor = a === cur ? b : b === cur ? a : -1;
-            if (neighbor >= 0 && !visited.has(neighbor)) {
-              visited.add(neighbor);
-              queue.push(neighbor);
-              order.push(neighbor);
+        for (double[] edge : edgeList) {
+            // add the smallest edges that don't form a cycle
+            int u = (int) edge[1], v = (int) edge[2];
+            if (find(u) != find(v)) {
+                union(u, v);
+                totalWeight += edge[0];
+                count++;
             }
-          }
-        }
-        animQueue = order;
-        runAnim('infected');
-      }
-
-      function dijkstraPatch(startId) {
-        const dist = new Array(nodes.length).fill(Infinity);
-        const visited = new Set();
-        dist[startId] = 0;
-        nodes[startId].state = 'secure';
-
-        while (visited.size < nodes.length) {
-          let u = -1;
-          for (let i = 0; i < nodes.length; i++) {
-            if (!visited.has(i) && (u === -1 || dist[i] < dist[u])) u = i;
-          }
-          if (dist[u] === Infinity) break;
-          visited.add(u);
-          for (const [a, b] of edges) {
-            const v = a === u ? b : b === u ? a : -1;
-            if (v >= 0 && dist[u] + 1 < dist[v]) {
-              dist[v] = dist[u] + 1;
-            }
-          }
+            if (count == numNodes - 1)
+                break;
         }
 
-        const order = [...Array(nodes.length).keys()]
-          .filter(i => i !== startId)
-          .sort((a, b) => dist[a] - dist[b]);
-        animQueue = order;
-        runAnim('secure');
-      }
-
-      function runAnim(state) {
-        if (animating) return;
-        animating = true;
-        function step() {
-          if (animQueue.length === 0) { animating = false; return; }
-          const id = animQueue.shift();
-          nodes[id].state = state;
-          draw();
-          setTimeout(step, 40);
+        if (count &lt; numNodes - 1) {
+            System.out.println("DISCONNECTED");
+            return;
         }
-        step();
-      }
 
-      function handlePittguardInteract(mx, my) {
-        let closest = -1, minDist = 999;
-        for (let i = 0; i < nodes.length; i++) {
-          const d = Math.hypot(nodes[i].x - mx, nodes[i].y - my);
-          if (d < minDist) { minDist = d; closest = i; }
-        }
-        if (closest >= 0 && minDist < 40) {
-          if (mode === 'infect') bfsInfect(closest);
-          else if (mode === 'patch') dijkstraPatch(closest);
-        }
-      }
+        double notCaught = Math.exp(-totalWeight);
+        double caught = 1 - notCaught;
 
-      canvas.addEventListener('click', (e) => {
-        const rect = canvas.getBoundingClientRect();
-        handlePittguardInteract(e.clientX - rect.left, e.clientY - rect.top);
-      });
+        System.out.printf("%.2f%%%n", caught * 100);
+    }
+}
+</code></pre>
+</section>
 
-      canvas.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        const rect = canvas.getBoundingClientRect();
-        handlePittguardInteract(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
-      }, { passive: false });
+<section>
+  <h2>restaurant_app.py</h2>
+  <p class="meta">Python · 82 lines</p>
+  <p class="desc">Flask + SQLAlchemy app for a restaurant ordering flow: customers submit orders by table number, kitchen staff view and clear active orders.</p>
+  <pre><code>from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from models.order_model import Base, Order
 
-      document.getElementById('pg-infect').addEventListener('click', () => {
-        mode = 'infect';
-        document.getElementById('pg-infect').classList.add('active');
-        document.getElementById('pg-patch').classList.remove('active');
-        document.getElementById('pg-hint').textContent = 'Tap a node to infect';
-      });
-      document.getElementById('pg-patch').addEventListener('click', () => {
-        mode = 'patch';
-        document.getElementById('pg-patch').classList.add('active');
-        document.getElementById('pg-infect').classList.remove('active');
-        document.getElementById('pg-hint').textContent = 'Tap a node to patch';
-      });
-      document.getElementById('pg-reset').addEventListener('click', () => {
-        nodes.forEach(n => n.state = 'neutral');
-        animQueue = [];
-        animating = false;
-        draw();
-      });
-    })();
+from flask import Flask, render_template, request, redirect, url_for, abort
 
-    // =====================================================
-    // BOGGLE
-    // =====================================================
-    (function initBoggle() {
-      const SIZE = 5;
-      let board = [];
-      let used = [];
-      let foundWords = [];
-      let highlightedPath = [];
-      let highlightTimer = null;
+DATABASE_URL = "sqlite:///order.db"
 
-      const WORD_LIST = [
-        'the', 'and', 'for', 'are', 'but', 'not', 'you', 'all', 'can', 'her', 'was', 'one', 'our', 'out', 'day', 'get', 'has', 'him', 'his', 'how', 'man', 'new', 'now', 'old', 'see', 'two', 'way', 'who', 'did', 'its', 'let', 'put', 'say', 'she', 'too', 'use', 'that', 'with', 'have', 'this', 'will', 'your', 'from', 'they', 'know', 'want', 'been', 'good', 'much', 'some', 'time', 'very', 'when', 'come', 'here', 'just', 'like', 'long', 'make', 'many', 'over', 'such', 'take', 'than', 'them', 'well', 'were', 'what', 'word', 'also', 'back', 'call', 'came', 'each', 'even', 'find', 'give', 'hand', 'help', 'high', 'hold', 'home', 'keep', 'kind', 'last', 'left', 'life', 'live', 'look', 'made', 'most', 'move', 'much', 'must', 'name', 'need', 'next', 'once', 'only', 'open', 'part', 'play', 'real', 'same', 'show', 'side', 'soon', 'tell', 'than', 'then', 'there', 'think', 'those', 'through', 'together', 'under', 'until', 'upon', 'used', 'very', 'what', 'when', 'while', 'world', 'would', 'year', 'about', 'after', 'again', 'along', 'among', 'asked', 'began', 'being', 'below', 'bring', 'built', 'carry', 'cause', 'close', 'comes', 'could', 'cover', 'cross', 'doing', 'drive', 'early', 'earth', 'eight', 'every', 'face', 'fall', 'five', 'four', 'free', 'full', 'goes', 'going', 'great', 'green', 'group', 'grow', 'hard', 'heat', 'help', 'here', 'high', 'hold', 'hour', 'idea', 'keep', 'king', 'knew', 'land', 'language', 'large', 'later', 'learn', 'leave', 'light', 'line', 'list', 'mean', 'more', 'move', 'near', 'never', 'night', 'nothing', 'often', 'open', 'order', 'other', 'place', 'point', 'power', 'press', 'print', 'quite', 'ready', 'river', 'round', 'run', 'said', 'school', 'second', 'seen', 'sense', 'small', 'sound', 'space', 'stand', 'start', 'state', 'still', 'stood', 'story', 'study', 'surface', 'system', 'table', 'three', 'told', 'trees', 'true', 'turn', 'under', 'until', 'water', 'where', 'which', 'while', 'white', 'whole', 'whose', 'wide', 'young',
-        'ace', 'age', 'ago', 'aim', 'air', 'ale', 'ant', 'ape', 'apt', 'arc', 'arm', 'art', 'ask', 'ate', 'awe', 'axe', 'aye', 'bad', 'bag', 'ban', 'bar', 'bat', 'bay', 'bed', 'bet', 'bid', 'big', 'bit', 'bog', 'bow', 'box', 'boy', 'bud', 'bug', 'bun', 'bus', 'buy', 'cab', 'cap', 'car', 'cat', 'cop', 'cow', 'cry', 'cup', 'cut', 'dab', 'dam', 'dim', 'dip', 'dog', 'dot', 'dry', 'dug', 'dye', 'ear', 'eat', 'egg', 'ego', 'elf', 'elk', 'elm', 'end', 'era', 'eve', 'eye', 'fad', 'fan', 'far', 'fat', 'fed', 'few', 'fig', 'fit', 'fix', 'fly', 'fog', 'fun', 'fur', 'gap', 'gas', 'gel', 'gem', 'gin', 'god', 'got', 'gum', 'gun', 'gut', 'guy', 'gym', 'hag', 'ham', 'hap', 'hat', 'hew', 'hex', 'hid', 'hip', 'hit', 'hog', 'hop', 'hot', 'hub', 'hug', 'hum', 'ice', 'icy', 'ill', 'imp', 'ink', 'ion', 'ire', 'irk', 'ivy', 'jab', 'jag', 'jam', 'jar', 'jaw', 'jet', 'jog', 'joy', 'jug', 'jut', 'keg', 'key', 'kin', 'kit', 'lab', 'lag', 'lap', 'law', 'lay', 'lea', 'led', 'leg', 'lid', 'lip', 'lit', 'log', 'lot', 'low', 'lug', 'mad', 'map', 'mat', 'mob', 'mod', 'mom', 'mop', 'mud', 'mug', 'nag', 'nap', 'net', 'nip', 'nit', 'nob', 'nod', 'nor', 'nun', 'nut', 'oak', 'oar', 'oat', 'odd', 'ode', 'off', 'oil', 'old', 'opt', 'orb', 'ore', 'owe', 'own', 'pad', 'pan', 'pat', 'paw', 'pea', 'peg', 'pen', 'pep', 'pet', 'pie', 'pig', 'pin', 'pit', 'pod', 'pop', 'pot', 'pox', 'pro', 'pry', 'pub', 'pug', 'pun', 'pup', 'raw', 'ray', 'red', 'rib', 'rid', 'rim', 'rip', 'rob', 'rod', 'rot', 'row', 'rub', 'rug', 'rum', 'run', 'rut', 'sag', 'sap', 'sat', 'saw', 'set', 'sew', 'sip', 'sir', 'sit', 'six', 'ski', 'sky', 'sob', 'sod', 'son', 'sop', 'sot', 'sow', 'spa', 'spy', 'sub', 'sue', 'sum', 'sun', 'sup', 'tab', 'tan', 'tap', 'tar', 'tea', 'ten', 'tip', 'toe', 'ton', 'top', 'toy', 'try', 'tub', 'tug', 'tun', 'urn', 'use', 'van', 'vat', 'vet', 'via', 'vie', 'vim', 'vow', 'wag', 'war', 'wed', 'wet', 'wig', 'win', 'wit', 'woe', 'wok', 'won', 'woo', 'yak', 'yam', 'yap', 'yaw', 'yew', 'zap', 'zeal', 'zoom'
-      ];
+engine = create_engine(DATABASE_URL)
+Base.metadata.create_all(engine)
 
-      function randomLetter() {
-        const weighted = 'AAABBBCCDDDEEEEEEFGGGHHIIIIIJKLLLLMMNNNNOOOOOPQRRRRRSSSSTTTTTUUUVVWWXYYZ';
-        return weighted[Math.floor(Math.random() * weighted.length)];
-      }
+Session = sessionmaker(bind=engine)
+session = Session()
 
-      function newBoard() {
-        board = [];
-        used = [];
-        for (let r = 0; r < SIZE; r++) {
-          board.push([]);
-          used.push([]);
-          for (let c = 0; c < SIZE; c++) {
-            board[r].push(randomLetter());
-            used[r].push(false);
-          }
-        }
-        foundWords = [];
-        highlightedPath = [];
-        renderBoard();
-        document.getElementById('boggle-word-list').innerHTML = '';
-        document.getElementById('boggle-word-count').textContent = '';
-        document.getElementById('boggle-feedback').textContent = '';
-        document.getElementById('boggle-input').value = '';
-      }
 
-      function renderBoard(pathTiles) {
-        const wrap = document.getElementById('boggle-board-wrap');
-        wrap.innerHTML = '';
-        const tileSize = Math.min(56, Math.floor((window.innerWidth < 600 ? window.innerWidth - 80 : 300) / SIZE));
-        for (let r = 0; r < SIZE; r++) {
-          const row = document.createElement('div');
-          row.style.cssText = 'display:flex; gap:6px;';
-          for (let c = 0; c < SIZE; c++) {
-            const tile = document.createElement('div');
-            const isHighlighted = pathTiles && pathTiles.some(t => t[0] === r && t[1] === c);
-            const pathIndex = pathTiles ? pathTiles.findIndex(t => t[0] === r && t[1] === c) : -1;
-            tile.style.cssText = `
-              width:${tileSize}px; height:${tileSize}px;
-              display:flex; align-items:center; justify-content:center;
-              font-family:var(--heading-font); font-weight:800; font-size:${Math.floor(tileSize * 0.42)}px;
-              letter-spacing:1px;
-              border: 1.5px solid ${isHighlighted ? 'var(--accent)' : 'var(--border)'};
-              background: ${isHighlighted ? 'rgba(168,212,255,0.15)' : 'var(--surface)'};
-              color: ${isHighlighted ? 'var(--accent)' : 'var(--text)'};
-              transition: all 0.15s;
-              position:relative;
-              box-shadow: ${isHighlighted ? '0 0 12px rgba(168,212,255,0.3)' : 'none'};
-              cursor: default;
-            `;
-            tile.textContent = board[r][c];
-            if (isHighlighted && pathTiles) {
-              const num = document.createElement('span');
-              num.style.cssText = `position:absolute; top:2px; right:4px; font-family:var(--mono); font-size:9px; color:var(--accent); opacity:0.7;`;
-              num.textContent = pathIndex + 1;
-              tile.appendChild(num);
-            }
-            row.appendChild(tile);
-          }
-          wrap.appendChild(row);
-        }
-      }
+app = Flask(__name__)
 
-      function searchPrefix(prefix) {
-        const p = prefix.toLowerCase();
-        let isWord = false;
-        let isPrefix = false;
-        for (const w of WORD_LIST) {
-          if (w === p) isWord = true;
-          if (w.startsWith(p) && w !== p) isPrefix = true;
-          if (isWord && isPrefix) break;
-        }
-        if (isWord && isPrefix) return 3;
-        if (isWord) return 2;
-        if (isPrefix) return 1;
-        return 0;
-      }
+@app.route("/")
+def home():
+    return redirect(url_for("main_menu", table_number=1))
 
-      function dfs(r, c, current, results) {
-        if (r < 0 || c < 0 || r >= SIZE || c >= SIZE) return;
-        if (used[r][c]) return;
-        current.push(board[r][c]);
-        const str = current.join('');
-        const result = searchPrefix(str);
-        if (result === 0) { current.pop(); return; }
-        if (str.length >= 3 && (result === 2 || result === 3)) {
-          results.add(str.toLowerCase());
-        }
-        used[r][c] = true;
-        for (let br = -1; br <= 1; br++) {
-          for (let bc = -1; bc <= 1; bc++) {
-            if (br === 0 && bc === 0) continue;
-            dfs(r + br, c + bc, current, results);
-          }
-        }
-        used[r][c] = false;
-        current.pop();
-      }
+@app.route("/&lt;table_number&gt;")
+def main_menu(table_number):
+    return render_template("main_menu.html", table_number=table_number)
 
-      function findAllWords() {
-        const results = new Set();
-        for (let r = 0; r < SIZE; r++) {
-          for (let c = 0; c < SIZE; c++) {
-            for (let rr = 0; rr < SIZE; rr++) used[rr].fill(false);
-            dfs(r, c, [], results);
-          }
-        }
-        return [...results].sort((a, b) => b.length - a.length || a.localeCompare(b));
-      }
+@app.route("/order/&lt;table_number&gt;", methods=["POST"])
+def order(table_number):
+    customer_name = request.form.get("customer_name")
+    order_items = request.form.get("order_summary")
+    if order_items:
+        order_items = order_items.splitlines()
+    else:
+        order_items = []
 
-      function findWordPath(word) {
-        const w = word.toUpperCase();
-        for (let r = 0; r < SIZE; r++) {
-          for (let c = 0; c < SIZE; c++) {
-            for (let rr = 0; rr < SIZE; rr++) used[rr].fill(false);
-            const path = dfsPath(r, c, w, 0, []);
-            if (path) return path;
-          }
-        }
-        return null;
-      }
+    orders_string = ",".join(order_items)
 
-      function dfsPath(r, c, word, idx, path) {
-        if (r < 0 || c < 0 || r >= SIZE || c >= SIZE) return null;
-        if (used[r][c]) return null;
-        if (board[r][c] !== word[idx]) return null;
-        const newPath = [...path, [r, c]];
-        if (idx === word.length - 1) return newPath;
-        used[r][c] = true;
-        for (let br = -1; br <= 1; br++) {
-          for (let bc = -1; bc <= 1; bc++) {
-            if (br === 0 && bc === 0) continue;
-            const result = dfsPath(r + br, c + bc, word, idx + 1, newPath);
-            if (result) { used[r][c] = false; return result; }
-          }
-        }
-        used[r][c] = false;
-        return null;
-      }
+    new_order = Order(
+        customer_name=customer_name,
+        orders=orders_string,
+        table_number=table_number
+    )
 
-      function setFeedback(msg, color) {
-        const el = document.getElementById('boggle-feedback');
-        el.textContent = msg;
-        el.style.color = color || 'var(--muted)';
-      }
+    try:
+        session.add(new_order)
+        session.commit()
+        print(f"Order {new_order.id} saved successfully!")
+    except Exception as e:
+        session.rollback()
+        print(f"error: {e}")
 
-      function highlightWord(word) {
-        const path = findWordPath(word.toUpperCase());
-        if (highlightTimer) clearTimeout(highlightTimer);
-        if (path) {
-          renderBoard(path);
-          highlightTimer = setTimeout(() => renderBoard(), 2000);
-        }
-      }
+    data = {
+        "customer_name": customer_name,
+        "order_items": order_items,
+        "table_number": table_number
+    }
 
-      document.getElementById('boggle-submit').addEventListener('click', () => {
-        const input = document.getElementById('boggle-input');
-        const word = input.value.trim().toLowerCase();
-        if (!word) return;
-        soundPop(500);
-        if (word.length < 3) {
-          setFeedback('Words must be 3+ letters.', 'var(--muted)');
-          return;
-        }
-        const inDict = searchPrefix(word);
-        const isWord = inDict === 2 || inDict === 3;
-        const path = findWordPath(word.toUpperCase());
-        if (!isWord) {
-          setFeedback('"' + word.toUpperCase() + '" — not in dictionary.', '#f73b7a');
-          renderBoard();
-        } else if (!path) {
-          setFeedback('"' + word.toUpperCase() + '" — valid word but not on this board.', '#f7a53b');
-          renderBoard();
-        } else {
-          setFeedback('\u2713 "' + word.toUpperCase() + '" found! (' + word.length + ' letters)', '#3bf7c8');
-          highlightWord(word);
-        }
-        input.value = '';
-      });
+    return render_template("order_summary.html", data=data)
 
-      document.getElementById('boggle-input').addEventListener('keydown', e => {
-        if (e.key === 'Enter') document.getElementById('boggle-submit').click();
-      });
+@app.route("/kitchen/")
+def kitchen():
+    orders = session.query(Order).order_by(Order.date_created).all()
+    orders_json = []
+    for order in orders:
+        orders_json.append(order.toJSON())
+    print(orders_json)
+    return render_template("kitchen.html", orders=orders_json)
 
-      document.getElementById('boggle-input').addEventListener('focus', e => {
-        e.target.style.borderColor = 'var(--accent)';
-      });
-      document.getElementById('boggle-input').addEventListener('blur', e => {
-        e.target.style.borderColor = 'var(--border)';
-      });
+@app.route('/delete_order/&lt;order_id&gt;', methods=['POST'])
+def delete_order(order_id):
+    order_to_delete = session.query(Order).get(order_id)
+    if order_to_delete is None:
+        abort(404)
+    try:
+        session.delete(order_to_delete)
+        session.commit()
+        return redirect(url_for("kitchen"))
+    except:
+        print("error")
+        return "error"
 
-      document.getElementById('boggle-solve').addEventListener('click', () => {
-        soundPop(600);
-        const words = findAllWords();
-        foundWords = words;
-        const listEl = document.getElementById('boggle-word-list');
-        const countEl = document.getElementById('boggle-word-count');
-        countEl.textContent = words.length + ' word' + (words.length !== 1 ? 's' : '') + ' found';
-        listEl.innerHTML = '';
-        words.slice(0, 80).forEach(w => {
-          const chip = document.createElement('span');
-          chip.textContent = w.toUpperCase();
-          chip.style.cssText = `font-family:var(--mono); font-size:10px; letter-spacing:1px; padding:4px 8px; border:1px solid var(--border); color:var(--muted); cursor:pointer; transition: all 0.15s;`;
-          chip.addEventListener('mouseenter', () => { chip.style.borderColor = 'var(--accent)'; chip.style.color = 'var(--accent)'; });
-          chip.addEventListener('mouseleave', () => { chip.style.borderColor = 'var(--border)'; chip.style.color = 'var(--muted)'; });
-          chip.addEventListener('click', () => {
-            soundPop(500 + Math.random() * 200);
-            highlightWord(w);
-            setFeedback('Showing path for "' + w.toUpperCase() + '"', 'var(--accent)');
-          });
-          listEl.appendChild(chip);
-        });
-        if (words.length > 80) {
-          const more = document.createElement('span');
-          more.textContent = '+' + (words.length - 80) + ' more';
-          more.style.cssText = 'font-family:var(--mono); font-size:10px; color:var(--muted); padding:4px 8px;';
-          listEl.appendChild(more);
-        }
-      });
+if __name__ == "__main__":
+    app.run(debug=True)
+</code></pre>
+</section>
 
-      document.getElementById('boggle-newboard').addEventListener('click', () => {
-        soundClick();
-        newBoard();
-      });
-
-      newBoard();
-    })();
-  </script>
 </body>
-
 </html>
